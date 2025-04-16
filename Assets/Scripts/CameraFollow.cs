@@ -13,10 +13,13 @@ public class CameraFollow : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (target == null) return;
+        if (target == null) return;                                                                 // Stop running if no target is defined
 
-        Vector3 desiredPosition = target.position + offset;
-        transform.position = Vector3.Lerp(transform.position, desiredPosition, followSpeed);   
-        transform.LookAt(target);
+        Vector3 desiredPosition = target.position + offset;                                         // Calulate the desired position with offset
+        transform.position = Vector3.Lerp(transform.position, desiredPosition, followSpeed);        // Smoothly move camera toward desired position
+        transform.LookAt(target);                                                                   // Alway look a the target
+
+        Debug.DrawLine(transform.position, target.position, Color.cyan);                            // Debug: Line from camera to target
+        Debug.Log("Camera position: " + transform.position + " | Target position: " + target.position); 
     }
 }
