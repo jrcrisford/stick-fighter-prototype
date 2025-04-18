@@ -120,14 +120,15 @@ Material:
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Ripple: 1
-    - _RippleDens: 5
-    - _RipplePow: 6
+    - _RippleDens: 10
+    - _RipplePow: 3
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
+    - _WaveSpeed: 0.1
     - _WorkflowMode: 1
     - _ZTest: 4
     - _ZWrite: 1
