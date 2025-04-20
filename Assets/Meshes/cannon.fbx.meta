@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: abf6be9d0b49742f495907f6add9e1ae
+guid: 0f76ffee9493a42598a5c3d46f402032
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,13 +7,18 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: BarrelWood
-    second: {fileID: 2100000, guid: d10cc3881aaf243e8a495983e1e14db3, type: 2}
+      name: CannonBarrel
+    second: {fileID: 2100000, guid: 37cbd12a8954343f89ac5ede64bb1547, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Metal
-    second: {fileID: 2100000, guid: eab09086ca1774aeb81d9c13f70798be, type: 2}
+      name: CannonBase
+    second: {fileID: 2100000, guid: d418105ac5dc241f3b65b7b7dc453f3a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CannonWheels
+    second: {fileID: 2100000, guid: 6158658a5ce3f46238be57cd7b48f7ed, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -86,7 +91,7 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips: []
-  importAnimation: 1
+  importAnimation: 0
   humanDescription:
     serializedVersion: 3
     human: []
@@ -101,11 +106,11 @@ ModelImporter:
     globalScale: 0.005
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   avatarSetup: 0
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
