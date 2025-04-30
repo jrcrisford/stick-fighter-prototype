@@ -4,6 +4,7 @@ using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour
 {
     public Transform target;
+    public float detectionRadius = 10f;
     public float stoppingDistance = 2f;
     public float rotationSpeed = 5f;
     private NavMeshAgent agent;
@@ -23,23 +24,30 @@ public class EnemyAI : MonoBehaviour
             return;
         }
 
-        float distance = Vector3.Distance(transform.position, target.position);
-        if (distance > stoppingDistance)
+        float distanceToTarget = Vector3.Distance(transform.position, target.position);
+        if (distanceToTarget <= detectionRadius)
         {
-            agent.SetDestination(target.position);
-            Debug.Log("Chasing player...");
+            if (distanceToTarget > stoppingDistance)
+            {
+                agent.SetDestination(target.position);
+                Debug.Log("Chasing player...");
+            }
+            else
+            {
+                // Stop moving and rotate to face the player
+                agent.ResetPath();
+                RotateToward(target.position);
+                Debug.Log("Player within range, ready to attack");
+            }
         }
         else
         {
-            // Stop moving and rotate to face the player
             agent.ResetPath();
-            RotateToward(target.position);
-            Debug.Log("Player within range, ready to attack");
         }
 
         if (agent.hasPath)
         {
-            Vector3[] corners  = agent.path.corners;
+            Vector3[] corners = agent.path.corners;
             for (int i = 0; i < corners.Length - 1; i++)
             {
                 Debug.DrawLine(corners[i], corners[i + 1], Color.magenta);
@@ -56,5 +64,11 @@ public class EnemyAI : MonoBehaviour
             Quaternion lookRotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, rotationSpeed);
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, detectionRadius);
     }
 }
