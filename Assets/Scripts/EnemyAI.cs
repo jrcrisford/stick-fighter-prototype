@@ -30,14 +30,12 @@ public class EnemyAI : MonoBehaviour
             if (distanceToTarget > stoppingDistance)
             {
                 agent.SetDestination(target.position);
-                Debug.Log("Chasing player...");
             }
             else
             {
                 // Stop moving and rotate to face the player
                 agent.ResetPath();
                 RotateToward(target.position);
-                Debug.Log("Player within range, ready to attack");
             }
         }
         else

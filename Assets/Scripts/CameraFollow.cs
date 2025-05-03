@@ -19,7 +19,6 @@ public class CameraFollow : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, desiredPosition, followSpeed);        // Smoothly move camera toward desired position
         transform.LookAt(target);                                                                   // Alway look a the target
 
-        Debug.DrawLine(transform.position, target.position, Color.cyan);                            // Debug: Line from camera to target
-        Debug.Log("Camera position: " + transform.position + " | Target position: " + target.position); 
+        Debug.DrawLine(transform.position, target.position, Color.cyan);                            // Debug: Line from camera to target 
     }
 }

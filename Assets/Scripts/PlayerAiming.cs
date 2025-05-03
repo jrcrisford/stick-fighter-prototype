@@ -24,13 +24,11 @@ public class PlayerAiming : MonoBehaviour
         {
             Debug.DrawLine(ray.origin, hit.point, Color.red);                   // Debug: draw the ray from camera
             Debug.DrawLine(transform.position, hit.point, Color.green);         // Debug: draw a line from the player to the hit point
-            Debug.Log("Raycast hit at: " + hit.point);
 
             Vector3 targetPoint = hit.point;                                    // Flatten target point to player height and rotate toward it
             targetPoint.y = transform.position.y;                               // <<
             RotateToward(targetPoint);                                          // <<
         } 
-        else { Debug.Log("Raycast did not hit anything."); } 
     }
 
     // Performs roation of the player to face a target point

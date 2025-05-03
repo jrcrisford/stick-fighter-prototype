@@ -116,26 +116,31 @@ public class MeleeWeapon : MonoBehaviour
         // TODO: Use swingSpeed to sync attack animation or effects
 
         lastAttackTime = Time.time;
+        bool hitSomething = false;
 
         // Detect targets in range using a sphere overlap
-        Collider[] hits = Physics.OverlapSphere(attackOrigin.position, attackRange, targetLayers);
+        Collider[] hits = Physics.OverlapSphere(attackOrigin.position, attackRange);
         foreach (Collider hit in hits)
         {
             // Don't hit yourself
-            if (hit.gameObject == gameObject) continue;
+            if (hit.transform.root == transform.root) continue;
 
             // Apply damage to any object with a Health component
             Health health = hit.GetComponent<Health>();
             if (health != null)
             {
                 health.TakeDamage(damage);
+                hitSomething = true;
                 Debug.Log($"{weaponType} hit {hit.name} for {damage} damage");
             }
         }
 
         // TODO: Add knockback effect
 
-        ApplyDurabilityLoss(1f);
+        if (hitSomething)
+        {
+            ApplyDurabilityLoss(1f);
+        }
     }
 
     // Reduces durability each time the weapon is used

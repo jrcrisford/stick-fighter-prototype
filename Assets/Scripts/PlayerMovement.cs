@@ -21,7 +21,6 @@ public class PlayerMovement : MonoBehaviour
 
         rb.MovePosition(rb.position + moveDirection * moveSpeed * Time.fixedDeltaTime);     // Apply movement to the Rigidbody
 
-        Debug.DrawRay(rb.position, moveDirection * 3f, Color.blue);                         // Debug: Draw a ray in the direction of movement
-        Debug.Log("Move Direction: " + moveDirection);                                      // Debug: Log the move direction
+        Debug.DrawRay(rb.position, moveDirection * 3f, Color.blue);                         // Debug: Draw a ray in the direction of movement                                     // Debug: Log the move direction
     }
 }
