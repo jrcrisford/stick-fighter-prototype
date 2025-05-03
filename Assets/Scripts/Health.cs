@@ -6,6 +6,7 @@ public class Health : MonoBehaviour
     [Header("Health Settings")]
     [SerializeField] private float maxHealth = 100f;
     [SerializeField] private float currentHealth;
+    [SerializeField] private HealthBar healthBar;
 
     [Header("Events")]
     public UnityEvent onDeath;
@@ -15,11 +16,13 @@ public class Health : MonoBehaviour
     private void Awake()
     {
         currentHealth = maxHealth;
+        healthBar.setMaxHealth(maxHealth);
     }
 
     public void TakeDamage(float damageAmount)
     {
         currentHealth = Mathf.Max(currentHealth - damageAmount, 0f);
+        healthBar.setHealth(currentHealth);
         onDamage?.Invoke(damageAmount);
         Debug.Log($"{name} took {damageAmount} damage. HP: {currentHealth}/{maxHealth}");
 
