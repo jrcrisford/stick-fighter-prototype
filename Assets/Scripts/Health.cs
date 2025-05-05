@@ -6,17 +6,38 @@ public class Health : MonoBehaviour
     [Header("Health Settings")]
     [SerializeField] private float maxHealth = 100f;
     [SerializeField] private float currentHealth;
-    [SerializeField] private HealthBar healthBar;
+    [SerializeField] private bool debugKill = false;
+    [SerializeField] private bool debugHit = false;
 
     [Header("Events")]
     public UnityEvent onDeath;
     public UnityEvent<float> onDamage;
     public UnityEvent<float> onHeal;
 
+    private Animator animator;
+    private HealthBar healthBar;
+
     private void Awake()
     {
+        animator = GetComponent<Animator>();
+        healthBar = GetComponentInChildren<HealthBar>();
         currentHealth = maxHealth;
         healthBar.setMaxHealth(maxHealth);
+    }
+
+    private void Update()
+    {
+        if (debugKill)
+        {
+            Die();
+            debugKill = false;
+        }
+
+        if (debugHit)
+        {
+            TakeDamage(10f);
+            debugHit = false;
+        }
     }
 
     public void TakeDamage(float damageAmount)
@@ -25,6 +46,11 @@ public class Health : MonoBehaviour
         healthBar.setHealth(currentHealth);
         onDamage?.Invoke(damageAmount);
         Debug.Log($"{name} took {damageAmount} damage. HP: {currentHealth}/{maxHealth}");
+
+        if (animator != null)
+        {
+            animator.SetTrigger("Hit");
+        }
 
         if (currentHealth <= 0f)
         {
@@ -49,7 +75,15 @@ public class Health : MonoBehaviour
     {
         Debug.Log($"{name} died.");
         onDeath?.Invoke();
-        Destroy(gameObject);
+        if (animator != null)
+        {
+            animator.SetTrigger("Die");
+            Destroy(gameObject, 4f);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
 }
