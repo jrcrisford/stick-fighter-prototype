@@ -8,12 +8,13 @@ public class EnemyAI : MonoBehaviour
     public float stoppingDistance = 2f;
     public float rotationSpeed = 5f;
     private NavMeshAgent agent;
+    private Animator animator;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.stoppingDistance = stoppingDistance;
-
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -23,6 +24,8 @@ public class EnemyAI : MonoBehaviour
             Debug.LogWarning("EnemyAI: No target set.");
             return;
         }
+
+        animator.SetFloat("Speed", agent.velocity.magnitude);
 
         float distanceToTarget = Vector3.Distance(transform.position, target.position);
         if (distanceToTarget <= detectionRadius)

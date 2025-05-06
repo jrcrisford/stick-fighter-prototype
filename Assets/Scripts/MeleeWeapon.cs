@@ -119,11 +119,19 @@ public class MeleeWeapon : MonoBehaviour
         bool hitSomething = false;
 
         // Detect targets in range using a sphere overlap
-        Collider[] hits = Physics.OverlapSphere(attackOrigin.position, attackRange);
+        Collider[] hits = Physics.OverlapSphere(attackOrigin.position, attackRange, targetLayers);
         foreach (Collider hit in hits)
         {
-            // Don't hit yourself
-            if (hit.transform.root == transform.root) continue;
+            Health hitHealth = hit.GetComponentInParent<Health>();
+            Health myHealth = GetComponentInParent<Health>();
+
+            Debug.Log($"Hit object: {hit.name}, Hit Health: {hitHealth}, My Health: {myHealth}");
+
+            if (hitHealth == myHealth)
+            {
+                Debug.Log("Skipping self-hit");
+                continue;
+            }
 
             // Apply damage to any object with a Health component
             Health health = hit.GetComponent<Health>();
