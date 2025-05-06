@@ -6,14 +6,22 @@ public class WeaponHandler : MonoBehaviour
     [SerializeField] private MeleeWeapon equippedWeapon;
 
     private Animator animator;
+    private bool isPlayer = false;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
+
+        if (gameObject.CompareTag("Player"))
+        {
+            isPlayer = true;
+        }
     }
 
     private void Update()
     {
+        if (!isPlayer) return;
+
         if (Input.GetMouseButtonDown(0))
         {
             AttemptAttack(0);

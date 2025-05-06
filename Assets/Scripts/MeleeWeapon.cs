@@ -28,7 +28,6 @@ public class MeleeWeapon : MonoBehaviour
     [SerializeField] private float maxDurability;                               // Maximum durability of the weapon
     [SerializeField] private float currentDurability;                           // Current durability of the weapon (decreases on hit)
 
-
     [Header("Attack Detection")]
     [Tooltip("Where the attack sphere will be cast from")]
     [SerializeField] private Transform attackOrigin;
@@ -122,16 +121,7 @@ public class MeleeWeapon : MonoBehaviour
         Collider[] hits = Physics.OverlapSphere(attackOrigin.position, attackRange, targetLayers);
         foreach (Collider hit in hits)
         {
-            Health hitHealth = hit.GetComponentInParent<Health>();
-            Health myHealth = GetComponentInParent<Health>();
-
-            Debug.Log($"Hit object: {hit.name}, Hit Health: {hitHealth}, My Health: {myHealth}");
-
-            if (hitHealth == myHealth)
-            {
-                Debug.Log("Skipping self-hit");
-                continue;
-            }
+            if (hit.transform.root == transform.root) continue;
 
             // Apply damage to any object with a Health component
             Health health = hit.GetComponent<Health>();
@@ -171,7 +161,7 @@ public class MeleeWeapon : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // Draws the attack range in the editor for debugging v
+    // Draws the attack range in the editor for debugging
     private void OnDrawGizmosSelected()
     {
         if (attackOrigin == null)

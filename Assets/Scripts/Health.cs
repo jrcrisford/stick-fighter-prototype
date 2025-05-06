@@ -47,14 +47,14 @@ public class Health : MonoBehaviour
         onDamage?.Invoke(damageAmount);
         Debug.Log($"{name} took {damageAmount} damage. HP: {currentHealth}/{maxHealth}");
 
-        if (animator != null)
-        {
-            animator.SetTrigger("Hit");
-        }
-
         if (currentHealth <= 0f)
         {
             Die();
+        }
+
+        if (animator != null)
+        {
+            animator.SetTrigger("Hit");
         }
     }
 
@@ -77,6 +77,7 @@ public class Health : MonoBehaviour
         onDeath?.Invoke();
         if (animator != null)
         {
+            animator.SetBool("isDead", true);
             animator.SetTrigger("Die");
             Destroy(gameObject, 4f);
         }
