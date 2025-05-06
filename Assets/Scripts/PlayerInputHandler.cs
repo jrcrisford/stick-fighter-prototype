@@ -5,6 +5,7 @@ public class PlayerInputHandler : MonoBehaviour
     
     public Vector2 MoveInput { get; private set; }                                          // Publicly accessible movement and aim input properties        
     public Vector2 AimInput { get; private set; }                                           // <<
+    public bool JumpInput { get; private set; }                                           // <<
 
     private PlayerControls controls;                                                        
 
@@ -17,6 +18,9 @@ public class PlayerInputHandler : MonoBehaviour
 
         controls.Player.Aim.performed += ctx => AimInput = ctx.ReadValue<Vector2>();        // Bind aim action to update AimInput
         controls.Player.Aim.canceled += ctx => AimInput = Vector2.zero;                     // <<
+
+        controls.Player.Jump.performed += ctx => JumpInput = true;                          // Bind jump action to update JumpPressed
+        controls.Player.Jump.canceled += ctx => JumpInput = false;                          // <<
     }
 
     // Enable input system when script becomes active

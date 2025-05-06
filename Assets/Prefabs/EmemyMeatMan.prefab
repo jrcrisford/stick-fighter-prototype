@@ -305,6 +305,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: -1257675906350332637, guid: f74054921c1dd5849ac6178159cbecc9, type: 3}
+      propertyPath: m_Name
+      value: MMBody
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f74054921c1dd5849ac6178159cbecc9, type: 3}
       propertyPath: m_Name
       value: EmemyMeatMan

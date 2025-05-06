@@ -1411,6 +1411,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+  jumpForce: 5
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  groundCheck: {fileID: 0}
+  groundCheckRadius: 0.2
 --- !u!114 &1831412461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1684,11 +1690,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2884224312513842944, guid: c0391e5773db54c4aaac74261533091b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.66
       objectReference: {fileID: 0}
     - target: {fileID: 2884224312513842944, guid: c0391e5773db54c4aaac74261533091b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -2.55
       objectReference: {fileID: 0}
     - target: {fileID: 2884224312513842944, guid: c0391e5773db54c4aaac74261533091b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1718,6 +1724,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4685922480885886408, guid: c0391e5773db54c4aaac74261533091b, type: 3}
+      propertyPath: m_Name
+      value: MMBody
+      objectReference: {fileID: 0}
+    - target: {fileID: 7324932532520526744, guid: c0391e5773db54c4aaac74261533091b, type: 3}
+      propertyPath: groundCheck
+      value: 
+      objectReference: {fileID: 1979287752}
     - target: {fileID: 7655482035751324541, guid: c0391e5773db54c4aaac74261533091b, type: 3}
       propertyPath: cam
       value: 
@@ -1727,6 +1741,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c0391e5773db54c4aaac74261533091b, type: 3}
+--- !u!4 &1979287752 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8592193715240869946, guid: c0391e5773db54c4aaac74261533091b, type: 3}
+  m_PrefabInstance: {fileID: 1873474369}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2024423202
 GameObject:
   m_ObjectHideFlags: 0
@@ -1967,6 +1986,10 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 188948170}
+    - target: {fileID: 4751770194024612238, guid: c0014a38fff81084494fa9058a93f573, type: 3}
+      propertyPath: m_Name
+      value: MMBody
+      objectReference: {fileID: 0}
     - target: {fileID: 6280095959595223104, guid: c0014a38fff81084494fa9058a93f573, type: 3}
       propertyPath: target
       value: 
