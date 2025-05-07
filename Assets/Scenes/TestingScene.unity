@@ -1684,6 +1684,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerMeatMan
       objectReference: {fileID: 0}
+    - target: {fileID: 2849455117409892293, guid: c0391e5773db54c4aaac74261533091b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2884224312513842944, guid: c0391e5773db54c4aaac74261533091b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1728,14 +1732,62 @@ PrefabInstance:
       propertyPath: m_Name
       value: MMBody
       objectReference: {fileID: 0}
+    - target: {fileID: 5927239340063861621, guid: c0391e5773db54c4aaac74261533091b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5955800867544855383, guid: c0391e5773db54c4aaac74261533091b, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6822446164523854380, guid: c0391e5773db54c4aaac74261533091b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7324932532520526744, guid: c0391e5773db54c4aaac74261533091b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7324932532520526744, guid: c0391e5773db54c4aaac74261533091b, type: 3}
       propertyPath: groundCheck
       value: 
       objectReference: {fileID: 1979287752}
+    - target: {fileID: 7324932532520526744, guid: c0391e5773db54c4aaac74261533091b, type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7363572060161711516, guid: c0391e5773db54c4aaac74261533091b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7655482035751324541, guid: c0391e5773db54c4aaac74261533091b, type: 3}
       propertyPath: cam
       value: 
       objectReference: {fileID: 188948170}
+    - target: {fileID: 9144275848710526330, guid: c0391e5773db54c4aaac74261533091b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9144275848710526330, guid: c0391e5773db54c4aaac74261533091b, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 71d0b065b7382af4ead92a32d51df53c, type: 2}
+    - target: {fileID: 9144275848710526330, guid: c0391e5773db54c4aaac74261533091b, type: 3}
+      propertyPath: m_UpdateMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9144275848710526330, guid: c0391e5773db54c4aaac74261533091b, type: 3}
+      propertyPath: m_CullingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9144275848710526330, guid: c0391e5773db54c4aaac74261533091b, type: 3}
+      propertyPath: m_AnimatePhysics
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9144275848710526330, guid: c0391e5773db54c4aaac74261533091b, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
