@@ -453,7 +453,7 @@ Animator:
   m_Avatar: {fileID: 9000000, guid: f74054921c1dd5849ac6178159cbecc9, type: 3}
   m_Controller: {fileID: 9100000, guid: 71d0b065b7382af4ead92a32d51df53c, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 1
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -488,7 +488,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 7
-  jumpForce: 5
+  jumpForce: 10
   groundLayer:
     serializedVersion: 2
     m_Bits: 0
