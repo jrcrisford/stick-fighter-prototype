@@ -37,6 +37,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        // Check for ground using a raycast
+        isGrounded = Physics.Raycast(groundCheck.position, Vector3.down, out RaycastHit hit, 0.3f);
+
         // Update the animator params each frame to sync with rendering
         animator.SetFloat("Speed", input.MoveInput.magnitude);
         animator.SetBool("isGrounded", isGrounded);
@@ -50,9 +53,6 @@ public class PlayerMovement : MonoBehaviour
 
         // Apply movement to the Rigidbody
         rb.MovePosition(rb.position + moveDirection * moveSpeed * Time.fixedDeltaTime);     
-
-        // Check for ground using a raycast
-        isGrounded = Physics.Raycast(groundCheck.position, Vector3.down, out RaycastHit hit, 0.3f);
 
         // Check if jump input is pressed and player is grounded
         if (input.JumpInput && isGrounded && canJump)                                       
