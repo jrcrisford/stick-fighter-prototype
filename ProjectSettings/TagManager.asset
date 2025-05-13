@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Emeny
+  - Death Plane
   layers:
   - Default
   - TransparentFX

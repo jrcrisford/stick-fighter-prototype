@@ -43,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
         // Update the animator params each frame to sync with rendering
         animator.SetFloat("Speed", input.MoveInput.magnitude);
         animator.SetBool("isGrounded", isGrounded);
+
     }
 
     private void FixedUpdate()
@@ -62,6 +63,14 @@ public class PlayerMovement : MonoBehaviour
 
         // Debug: Draw a ray in the direction of movement
         Debug.DrawRay(rb.position, moveDirection * 3f, Color.blue);                         
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Death Plane"))
+        {
+            Destroy(gameObject);
+        }
     }
 
     /// <summary>

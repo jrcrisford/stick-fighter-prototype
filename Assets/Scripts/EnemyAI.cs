@@ -15,7 +15,6 @@ public class EnemyAI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agent.stoppingDistance = stoppingDistance;
         animator = GetComponent<Animator>();
-        target = GameObject.Find("PlayerMeatMan")?.transform;
     }
 
     private void Update()
@@ -53,6 +52,28 @@ public class EnemyAI : MonoBehaviour
             for (int i = 0; i < corners.Length - 1; i++)
             {
                 Debug.DrawLine(corners[i], corners[i + 1], Color.magenta);
+            }
+        }
+    }
+
+    private void DisableRagdoll()
+    {
+        Rigidbody[] bodies = GetComponentsInChildren<Rigidbody>();
+        foreach (Rigidbody rb in bodies)
+        {
+            if (rb != GetComponent<Rigidbody>())
+            {
+                rb.isKinematic = true;
+                rb.detectCollisions = false;
+            }
+        }
+
+        Collider[] colliders = GetComponentsInChildren<Collider>();
+        foreach (Collider col in colliders)
+        {
+            if (col != GetComponent<Collider>())
+            {
+                col.enabled = false;
             }
         }
     }
