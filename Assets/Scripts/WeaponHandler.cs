@@ -3,10 +3,16 @@ using UnityEngine;
 public class WeaponHandler : MonoBehaviour
 {
     [Header("Weapon Settings")]
-    [SerializeField] private MeleeWeapon equippedWeapon;
+    [SerializeField] private MeleeWeapon leftWeapon;
+    [SerializeField] private MeleeWeapon rightWeapon;
+
+    [Header("Hand Transforms")]
+    [SerializeField] private Transform leftHand;
+    [SerializeField] private Transform rightHand;
 
     private Animator animator;
     private bool isPlayer = false;
+    private bool equipToLeftNext = true;
 
     private void Awake()
     {
@@ -34,20 +40,51 @@ public class WeaponHandler : MonoBehaviour
 
     public void AttemptAttack(int attackSide)
     {
-        if (equippedWeapon == null)
+        MeleeWeapon weapon = attackSide == 0 ? leftWeapon : rightWeapon;
+
+        if (weapon == null)
         {
-            Debug.LogWarning($"{name} has no weapon equipped.");
+            Debug.LogWarning($"{name} has no weapon equipped in {(attackSide == 0 ? "left" : "right")} hand.");
             return;
         }
 
         if (animator != null)
         {
-            if (attackSide == 0)
-                animator.SetTrigger("LeftAttack");
-            else
-                animator.SetTrigger("RightAttack");
+            animator.SetTrigger(attackSide == 0 ? "LeftAttack" : "RightAttack");
         }
 
-        equippedWeapon.TryAttack();
+        weapon.TryAttack();
+    }
+
+    public void PickupWeapon(MeleeWeapon weapon)
+    {
+        if (equipToLeftNext)
+        {
+            if (leftWeapon != null) Destroy(leftWeapon.gameObject);
+            EquipWeapon(weapon, leftHand, true);
+        }
+        else
+        {
+            if (rightWeapon != null) Destroy(rightWeapon.gameObject);
+            EquipWeapon(weapon, rightHand, false);
+        }
+
+        equipToLeftNext = !equipToLeftNext;
+    }
+
+    private void EquipWeapon(MeleeWeapon weapon, Transform hand, bool isLeft)
+    {
+        weapon.transform.SetParent(hand);
+        weapon.transform.localPosition = Vector3.zero;
+        weapon.transform.localRotation = Quaternion.identity;
+
+        var rb = weapon.GetComponent<Rigidbody>();
+        if (rb) rb.isKinematic = true;
+
+        var col = weapon.GetComponent<Collider>();
+        if (col) col.enabled = false;
+
+        if (isLeft) leftWeapon = weapon;
+        else rightWeapon = weapon;
     }
 }
