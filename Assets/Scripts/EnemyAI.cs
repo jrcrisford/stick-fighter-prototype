@@ -15,6 +15,7 @@ public class EnemyAI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agent.stoppingDistance = stoppingDistance;
         animator = GetComponent<Animator>();
+        target = GameObject.Find("PlayerMeatMan")?.transform;
     }
 
     private void Update()
