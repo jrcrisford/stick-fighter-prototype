@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MeleeWeapon : MonoBehaviour
 {
@@ -31,8 +31,6 @@ public class MeleeWeapon : MonoBehaviour
     [Header("Attack Detection")]
     [Tooltip("Where the attack sphere will be cast from")]
     [SerializeField] private Transform attackOrigin;
-    [Tooltip("What layers this weapon can hit (e.g. Enemy, Player)")]
-    [SerializeField] private LayerMask targetLayers;
 
     private float lastAttackTime;                                               // Time when the last attack happened
 
@@ -118,7 +116,7 @@ public class MeleeWeapon : MonoBehaviour
         bool hitSomething = false;
 
         // Detect targets in range using a sphere overlap
-        Collider[] hits = Physics.OverlapSphere(attackOrigin.position, attackRange, targetLayers);
+        Collider[] hits = Physics.OverlapSphere(attackOrigin.position, attackRange);
         foreach (Collider hit in hits)
         {
             if (hit.transform.root == transform.root) continue;

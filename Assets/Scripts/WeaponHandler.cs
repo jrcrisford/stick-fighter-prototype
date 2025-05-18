@@ -1,3 +1,4 @@
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class WeaponHandler : MonoBehaviour
@@ -22,6 +23,15 @@ public class WeaponHandler : MonoBehaviour
         {
             isPlayer = true;
         }
+
+        Transform[] allChildren = GetComponentsInChildren<Transform>(true);
+        foreach (Transform t in allChildren)
+        {
+            if (t.name == "hand.L_end") leftHand = t;
+            if (t.name == "hand.R_end") rightHand = t;
+        }
+
+        if (leftHand == null || rightHand == null) Debug.LogWarning("WeaponHandler: Could not find hand transforms by name.");
     }
 
     private void Update()
