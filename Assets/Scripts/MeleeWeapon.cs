@@ -34,6 +34,7 @@ public class MeleeWeapon : MonoBehaviour
     [Tooltip("Where the attack sphere will be cast from")]
     [SerializeField] private Transform attackOrigin;
 
+
     private float lastAttackTime;                                               // Time when the last attack happened
 
     private void Awake()
@@ -113,6 +114,57 @@ public class MeleeWeapon : MonoBehaviour
         }
 
         lastAttackTime = Time.time;
+        /* bool hitSomething = false;
+
+        // Detect targets in range using a sphere overlap
+        Collider[] hits = Physics.OverlapSphere(attackOrigin.position, attackRange);
+        foreach (Collider hit in hits)
+        {
+            if (hit.transform.root == transform.root) continue;
+
+            // Apply damage to any object with a Health component
+            Health health = hit.GetComponent<Health>();
+            if (health != null)
+            {
+                health.TakeDamage(damage);
+                hitSomething = true;
+                Debug.Log($"{weaponType} hit {hit.name} for {damage} damage");
+
+                // Knockback and temporary NavMeshAgent disable
+                Rigidbody rb = hit.attachedRigidbody;
+                NavMeshAgent agent = hit.GetComponent<NavMeshAgent>();
+
+                if (agent != null)
+                {
+                    agent.enabled = false;
+                }
+
+                if (rb != null)
+                {
+                    Vector3 knockbackDir = (hit.transform.position - attackOrigin.position).normalized;
+                    knockbackDir.y = 0.5f;
+                    knockbackDir.x = 1f;
+                    rb.AddForce(knockbackDir * knockbackForce, ForceMode.Impulse);
+
+                    // Re-enable NavMeshAgent after delay
+                    StartCoroutine(ReenableAgent(agent, 1f));
+                }
+            }
+        }
+
+        // TODO: Add knockback effect
+
+        if (hitSomething)
+        {
+            ApplyDurabilityLoss(1f);
+        } */
+        StartCoroutine(doAttackHitbox());
+    }
+
+    private IEnumerator doAttackHitbox()
+    {
+        // Delay the hitbox spawning until halfway through the swing
+        yield return new WaitForSeconds(swingSpeed / 2f);
         bool hitSomething = false;
 
         // Detect targets in range using a sphere overlap
@@ -128,6 +180,8 @@ public class MeleeWeapon : MonoBehaviour
                 health.TakeDamage(damage);
                 hitSomething = true;
                 Debug.Log($"{weaponType} hit {hit.name} for {damage} damage");
+
+                // Do attack hit particles
 
                 // Knockback and temporary NavMeshAgent disable
                 Rigidbody rb = hit.attachedRigidbody;

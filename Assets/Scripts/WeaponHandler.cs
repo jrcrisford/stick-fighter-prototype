@@ -91,7 +91,7 @@ public class WeaponHandler : MonoBehaviour
 
             // Position the weapon so its GripPoint aligns with the hand
             weapon.transform.position = hand.position;
-            weapon.transform.rotation = hand.rotation * Quaternion.Euler(-70, 115, 90);
+            weapon.transform.rotation = hand.rotation * Quaternion.Euler(-50, -20, 90);
 
             // Offset the weapon to match the grip's relative transform
             Vector3 gripOffset = weapon.transform.position - grip.position;
