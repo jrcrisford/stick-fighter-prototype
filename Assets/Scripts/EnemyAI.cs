@@ -21,6 +21,15 @@ public class EnemyAI : MonoBehaviour
 
         bodies = GetComponentsInChildren<Rigidbody>();
 
+        GameObject player = GameObject.Find("PlayerMeatMan");
+        if (player != null)
+        {
+            target = player.transform;
+        }
+        else
+        {
+            Debug.LogWarning("EnemyAI: Could not find GameObject named 'PlayerMeatMan'.");
+        }
     }
 
     private void Update()

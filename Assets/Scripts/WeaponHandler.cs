@@ -1,3 +1,4 @@
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class WeaponHandler : MonoBehaviour
@@ -22,6 +23,15 @@ public class WeaponHandler : MonoBehaviour
         {
             isPlayer = true;
         }
+
+        Transform[] allChildren = GetComponentsInChildren<Transform>(true);
+        foreach (Transform t in allChildren)
+        {
+            if (t.name == "hand.L_end") leftHand = t;
+            if (t.name == "hand.R_end") rightHand = t;
+        }
+
+        if (leftHand == null || rightHand == null) Debug.LogWarning("WeaponHandler: Could not find hand transforms by name.");
     }
 
     private void Update()
@@ -74,9 +84,26 @@ public class WeaponHandler : MonoBehaviour
 
     private void EquipWeapon(MeleeWeapon weapon, Transform hand, bool isLeft)
     {
-        weapon.transform.SetParent(hand);
-        weapon.transform.localPosition = Vector3.zero;
-        weapon.transform.localRotation = Quaternion.identity;
+        Transform grip = weapon.transform.Find("GripPoint");
+        if (grip != null)
+        {
+            weapon.transform.SetParent(hand);
+
+            // Position the weapon so its GripPoint aligns with the hand
+            weapon.transform.position = hand.position;
+            weapon.transform.rotation = hand.rotation * Quaternion.Euler(-70, 115, 90);
+
+            // Offset the weapon to match the grip's relative transform
+            Vector3 gripOffset = weapon.transform.position - grip.position;
+            weapon.transform.position += gripOffset;
+        }
+        else
+        {
+            Debug.LogWarning($"Weapon '{weapon.name}' has no GripPoint transform.");
+            weapon.transform.SetParent(hand);
+            weapon.transform.localPosition = Vector3.zero;
+            weapon.transform.localRotation = Quaternion.identity;
+        }
 
         var rb = weapon.GetComponent<Rigidbody>();
         if (rb) rb.isKinematic = true;
