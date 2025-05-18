@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
+using System.Collections;
 
 public class MeleeWeapon : MonoBehaviour
 {
@@ -21,7 +23,7 @@ public class MeleeWeapon : MonoBehaviour
     [SerializeField] private float damage;                                      // How much damage the weapon does
     [SerializeField] private float attackRange;                                 // How far the weapon can hit
     [SerializeField] private float attackCooldown;                              // Minimum time between attacks
-    [SerializeField] private float knockbackForce;                              // (Unused for now) force applied to hit targets   
+    [SerializeField] private float knockbackForce;                              // Force applied to hit targets   
     [SerializeField] private float swingSpeed;                                  // (Unsed for now) speed of the weapon swing for syncing animations
 
     [Header("Durability")]
@@ -110,8 +112,6 @@ public class MeleeWeapon : MonoBehaviour
             return;
         }
 
-        // TODO: Use swingSpeed to sync attack animation or effects
-
         lastAttackTime = Time.time;
         bool hitSomething = false;
 
@@ -128,6 +128,27 @@ public class MeleeWeapon : MonoBehaviour
                 health.TakeDamage(damage);
                 hitSomething = true;
                 Debug.Log($"{weaponType} hit {hit.name} for {damage} damage");
+
+                // Knockback and temporary NavMeshAgent disable
+                Rigidbody rb = hit.attachedRigidbody;
+                NavMeshAgent agent = hit.GetComponent<NavMeshAgent>();
+
+                if (agent != null)
+                {
+                    agent.enabled = false;
+                }
+
+                if (rb != null)
+                {
+                    Vector3 knockbackDir = (hit.transform.position - attackOrigin.position).normalized;
+                    knockbackDir.y = 0.5f;
+                    knockbackDir.x = 1f;
+                    rb.AddForce(knockbackDir * knockbackForce, ForceMode.Impulse);
+
+                    // Re-enable NavMeshAgent after delay
+                    StartCoroutine(ReenableAgent(agent, 1f));
+                }
+
             }
         }
 
@@ -171,4 +192,15 @@ public class MeleeWeapon : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(attackOrigin.position, attackRange);
     }
+    private IEnumerator ReenableAgent(NavMeshAgent agent, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (agent != null)
+        {
+            agent.enabled = true;
+            agent.velocity = Vector3.zero;
+        }
+    }
+
 }
