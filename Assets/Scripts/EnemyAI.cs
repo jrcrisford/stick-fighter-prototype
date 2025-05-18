@@ -15,6 +15,16 @@ public class EnemyAI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agent.stoppingDistance = stoppingDistance;
         animator = GetComponent<Animator>();
+
+        GameObject player = GameObject.Find("PlayerMeatMan");
+        if (player != null)
+        {
+            target = player.transform;
+        }
+        else
+        {
+            Debug.LogWarning("EnemyAI: Could not find GameObject named 'PlayerMeatMan'.");
+        }
     }
 
     private void Update()

@@ -54,6 +54,9 @@ public class WaveSpawner : MonoBehaviour
             isSpawning = true;
             Wave wave = waves[currentWave];
 
+            // Notify GameManager that a wave is starting
+            GameManager.Instance?.StartWave();
+
             // Spawn all enemies in the wave
             foreach (EnemyGroup group in wave.enemies)
             {
@@ -81,11 +84,15 @@ public class WaveSpawner : MonoBehaviour
                 return activeEnemies.Count == 0;
             });
 
+            // Notify GameManager that the wave ended
+            GameManager.Instance?.EndWave(currentWave);
+
             currentWave++;
             yield return new WaitForSeconds(delayBetweenWaves);
         }
 
         Debug.Log("All waves complete!");
+        GameManager.Instance?.PrintTotalScore();
     }
 
     private Transform GetRandomSpawnPoint(SpawnPoint.SpawnType type)

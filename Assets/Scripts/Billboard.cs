@@ -2,10 +2,26 @@ using UnityEngine;
 
 public class Billboard : MonoBehaviour
 {
-    public Transform cam;
+    private Transform cam;
 
-    void LateUpdate()
+    private void Awake()
     {
-        transform.LookAt(transform.position + cam.forward);
+        Camera mainCamera = Camera.main;
+        if (mainCamera != null)
+        {
+            cam = mainCamera.transform;
+        }
+        else
+        {
+            Debug.LogWarning("Billboard: Main Camera not found.");
+        }
+    }
+
+    private void LateUpdate()
+    {
+        if (cam != null)
+        {
+            transform.LookAt(transform.position + cam.forward);
+        }
     }
 }
