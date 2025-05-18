@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
 
     private float waveStartTime;
     private bool waveActive = false;
+    public bool IsWaveActive => waveActive;
+    public int CurrentWaveNumber { get; private set; } = 0;
+    public float CurrentWaveTime => Time.time - waveStartTime;
 
     private void Awake()
     {
@@ -61,4 +64,10 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log($"Total Score: {GetTotalScore():F1}");
     }
+
+    public void SetWaveNumber(int index)
+    {
+        CurrentWaveNumber = index;
+    }
+
 }

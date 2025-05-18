@@ -54,6 +54,9 @@ public class WaveSpawner : MonoBehaviour
             isSpawning = true;
             Wave wave = waves[currentWave];
 
+            GameManager.Instance?.SetWaveNumber(currentWave);
+            GameManager.Instance?.StartWave();
+
             // Notify GameManager that a wave is starting
             GameManager.Instance?.StartWave();
 
