@@ -5,13 +5,21 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
     public static bool gamePaused = false;
+    public static bool gameOver = false;
 
     public GameObject pauseMenuUI;
+    public GameObject gameOverUI;
+    public GameObject gameWinUI;
+    public GameObject player;
 
-    // Update is called once per frame
+    public void Start()
+    {
+        Time.timeScale = 1.0f;
+    }
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !gameOver)
         {
             if (gamePaused)
             {
@@ -22,6 +30,12 @@ public class PauseMenu : MonoBehaviour
                 GamePause();
             }
         }
+
+        if(player == null && !gamePaused)
+        {
+            GameOver();
+        }
+
     }
 
     public void GameResume()
@@ -31,11 +45,24 @@ public class PauseMenu : MonoBehaviour
         gamePaused = false;
     }
 
-    void GamePause()
+    public void GamePause()
     {
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         gamePaused = true;
+    }
+
+    public void GameOver()
+    {
+        gameOverUI.SetActive(true);
+        Time.timeScale = 0f;
+        gameOver = true;
+    }
+
+    public void GameWin()
+    {
+        gameWinUI.SetActive(true);
+        Time.timeScale = 0f;
     }
 
     public void RestartLevel()
