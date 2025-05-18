@@ -34,6 +34,8 @@ public class MeleeWeapon : MonoBehaviour
     [Tooltip("Where the attack sphere will be cast from")]
     [SerializeField] private Transform attackOrigin;
 
+    [Header("Hit Particle")]
+    [SerializeField] private ParticleSystem hitParticleSystem;
 
     private float lastAttackTime;                                               // Time when the last attack happened
 
@@ -182,6 +184,7 @@ public class MeleeWeapon : MonoBehaviour
                 Debug.Log($"{weaponType} hit {hit.name} for {damage} damage");
 
                 // Do attack hit particles
+                hitParticleSystem.Play();
 
                 // Knockback and temporary NavMeshAgent disable
                 Rigidbody rb = hit.attachedRigidbody;
