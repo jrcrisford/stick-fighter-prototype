@@ -77,9 +77,16 @@ public class Health : MonoBehaviour
         onDeath?.Invoke();
         if (animator != null)
         {
-            animator.SetBool("isDead", true);
-            animator.SetTrigger("Die");
-            Destroy(gameObject, 4f);
+            if(gameObject.CompareTag("Player"))
+            {
+                animator.SetBool("isDead", true);
+                animator.SetTrigger("Die");
+                Destroy(gameObject, 4f);
+            }
+            else if(gameObject.CompareTag("Emeny"))
+            {
+                Destroy(gameObject, 4f);
+            }
         }
         else
         {
