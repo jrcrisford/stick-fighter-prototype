@@ -7,14 +7,20 @@ public class EnemyAI : MonoBehaviour
     public float detectionRadius = 10f;
     public float stoppingDistance = 2f;
     public float rotationSpeed = 5f;
+
     private NavMeshAgent agent;
     private Animator animator;
+
+    private Rigidbody[] bodies;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.stoppingDistance = stoppingDistance;
         animator = GetComponent<Animator>();
+
+        bodies = GetComponentsInChildren<Rigidbody>();
+
     }
 
     private void Update()
@@ -56,25 +62,16 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    private void DisableRagdoll()
+    public void EnableRagdoll()
     {
-        Rigidbody[] bodies = GetComponentsInChildren<Rigidbody>();
+        animator.enabled = false;
+        agent.enabled = false;
+
         foreach (Rigidbody rb in bodies)
         {
-            if (rb != GetComponent<Rigidbody>())
-            {
-                rb.isKinematic = true;
-                rb.detectCollisions = false;
-            }
-        }
-
-        Collider[] colliders = GetComponentsInChildren<Collider>();
-        foreach (Collider col in colliders)
-        {
-            if (col != GetComponent<Collider>())
-            {
-                col.enabled = false;
-            }
+            rb.detectCollisions = true;
+            rb.useGravity = true;
+            rb.isKinematic = false;
         }
     }
 
