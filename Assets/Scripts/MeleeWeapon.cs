@@ -148,7 +148,6 @@ public class MeleeWeapon : MonoBehaviour
                     // Re-enable NavMeshAgent after delay
                     StartCoroutine(ReenableAgent(agent, 1f));
                 }
-
             }
         }
 
