@@ -1287,6 +1287,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 320922187811739120, guid: 9b03521ea9bfa4c35a0495f3316c934f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 5.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 320922187811739120, guid: 9b03521ea9bfa4c35a0495f3316c934f, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 5.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 320922187811739120, guid: 9b03521ea9bfa4c35a0495f3316c934f, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 105.56268
+      objectReference: {fileID: 0}
+    - target: {fileID: 320922187811739120, guid: 9b03521ea9bfa4c35a0495f3316c934f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 12.821951
       objectReference: {fileID: 0}
@@ -1326,26 +1338,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 320922187811739120, guid: 9b03521ea9bfa4c35a0495f3316c934f, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1098866949288300362, guid: 9b03521ea9bfa4c35a0495f3316c934f, type: 3}
       propertyPath: m_Name
       value: BambooBonker
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 320922187811739120, guid: 9b03521ea9bfa4c35a0495f3316c934f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1025939602}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1098866949288300362, guid: 9b03521ea9bfa4c35a0495f3316c934f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1606932710}
-    - targetCorrespondingSourceObject: {fileID: 1098866949288300362, guid: 9b03521ea9bfa4c35a0495f3316c934f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1606932709}
-    - targetCorrespondingSourceObject: {fileID: 1098866949288300362, guid: 9b03521ea9bfa4c35a0495f3316c934f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1606932708}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b03521ea9bfa4c35a0495f3316c934f, type: 3}
 --- !u!1 &715255939
 GameObject:
@@ -1744,7 +1748,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e2764a2632a359468476946edff2dab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 188948170}
 --- !u!1 &987255120 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6985809624663947230, guid: f74054921c1dd5849ac6178159cbecc9, type: 3}
@@ -1844,37 +1847,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.0041859816, y: 0.0016651284, z: 0.0024095029}
   m_Center: {x: 0, y: 0.0008325597, z: -0.00011022249}
---- !u!1 &1025939601
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1025939602}
-  m_Layer: 0
-  m_Name: AttackOrigin
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1025939602
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1025939601}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.00955}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1606932713}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1031465191
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2886,72 +2858,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e473e6ffc1083b46aa51e1f77db843a, type: 3}
---- !u!1 &1606932707 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1098866949288300362, guid: 9b03521ea9bfa4c35a0495f3316c934f, type: 3}
-  m_PrefabInstance: {fileID: 653190187}
-  m_PrefabAsset: {fileID: 0}
---- !u!64 &1606932708
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1606932707}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 2534964839176971238, guid: 79acb7b01b7e9445a9c771c1784fc105, type: 3}
---- !u!114 &1606932709
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1606932707}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d05531f35d9e44f409dcd687ae5c1294, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1606932710
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1606932707}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c44bb26394fbbc442b28e75da52d6976, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponType: 0
-  usePresetStats: 1
-  damage: 0
-  attackRange: 0
-  attackCooldown: 0
-  knockbackForce: 0
-  swingSpeed: 0
-  maxDurability: 0
-  currentDurability: 0
-  attackOrigin: {fileID: 1025939602}
---- !u!4 &1606932713 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 320922187811739120, guid: 9b03521ea9bfa4c35a0495f3316c934f, type: 3}
-  m_PrefabInstance: {fileID: 653190187}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1771322979 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8472058352260637923, guid: f74054921c1dd5849ac6178159cbecc9, type: 3}
