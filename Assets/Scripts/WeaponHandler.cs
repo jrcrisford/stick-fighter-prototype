@@ -36,15 +36,16 @@ public class WeaponHandler : MonoBehaviour
 
     private void Update()
     {
-        if (!isPlayer) return;
-
-        if (Input.GetMouseButtonDown(0))
+        if (isPlayer)
         {
-            AttemptAttack(0);
-        }
-        else if (Input.GetMouseButtonDown(1))
-        {
-            AttemptAttack(1);
+            if (Input.GetMouseButtonDown(0))
+            {
+                AttemptAttack(0);
+            }
+            else if (Input.GetMouseButtonDown(1))
+            {
+                AttemptAttack(1);
+            }
         }
     }
 
@@ -68,6 +69,7 @@ public class WeaponHandler : MonoBehaviour
 
     public void PickupWeapon(MeleeWeapon weapon)
     {
+        if (!isPlayer) Debug.Log("Enemy picked up weapon");
         if (equipToLeftNext)
         {
             if (leftWeapon != null) Destroy(leftWeapon.gameObject);
