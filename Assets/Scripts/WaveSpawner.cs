@@ -95,7 +95,7 @@ public class WaveSpawner : MonoBehaviour
         }
 
         Debug.Log("All waves complete!");
-        GameManager.Instance?.PrintTotalScore();
+        GameManager.Instance?.TriggerGameOver();
     }
 
     private Transform GetRandomSpawnPoint(SpawnPoint.SpawnType type)

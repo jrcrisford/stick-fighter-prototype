@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     public bool IsWaveActive => waveActive;
     public int CurrentWaveNumber { get; private set; } = 0;
     public float CurrentWaveTime => Time.time - waveStartTime;
+    private bool isGameOver = false;
+    public bool IsGameOver => isGameOver;
 
     private void Awake()
     {
@@ -60,10 +62,20 @@ public class GameManager : MonoBehaviour
         return total;
     }
 
-    public void PrintTotalScore()
+    public void TriggerGameOver()
     {
-        Debug.Log($"Total Score: {GetTotalScore():F1}");
+        if (isGameOver) return;
+
+        isGameOver = true;
+        waveActive = false;
+
+        float totalScore = GetTotalScore();
+        Debug.Log($"Game Over! Total Score: {totalScore:F1}");
+
+        // TODO: Replace with actual UI display or transition
+        // Example: UIManager.Instance.ShowGameOverScreen(totalScore);
     }
+
 
     public void SetWaveNumber(int index)
     {
