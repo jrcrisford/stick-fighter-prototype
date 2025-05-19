@@ -1692,7 +1692,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   detectionRadius: 100
-  stoppingDistance: 2
+  stoppingDistance: 4
+  moveSpeed: 7
   rotationSpeed: 5
 --- !u!114 &4367122785827036119
 MonoBehaviour:

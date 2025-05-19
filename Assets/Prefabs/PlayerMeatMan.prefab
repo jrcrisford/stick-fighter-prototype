@@ -487,14 +487,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50460e2e2e84bbd45990c3c695171f7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 7
+  moveSpeed: 9
   jumpForce: 10
   groundLayer:
     serializedVersion: 2
     m_Bits: 0
   groundCheck: {fileID: 8592193715240869946}
   groundCheckRadius: 0.2
-  fallSpeed: 9.8
 --- !u!114 &2849455117409892293
 MonoBehaviour:
   m_ObjectHideFlags: 0
