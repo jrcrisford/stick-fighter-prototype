@@ -1,12 +1,22 @@
+using System;
+using System.Runtime.CompilerServices;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
+
+[RequireComponent(typeof(WeaponHandler))]
+[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(Animator))]
 
 public class EnemyAI : MonoBehaviour
 {
     public Transform target;
     public float detectionRadius = 10f;
     public float stoppingDistance = 2f;
-
+    [Tooltip("This is in Degrees not Rads or Quats")]
+    public float attackRadius = 10f;
+    public GameObject leftWeapon;
+    // public GameObject rightWeapon;
 
     [Header("Movement Settings")]
     public float moveSpeed = 4f;
@@ -14,6 +24,7 @@ public class EnemyAI : MonoBehaviour
 
     private NavMeshAgent agent;
     private Animator animator;
+    private WeaponHandler weapons;
 
     private Rigidbody[] bodies;
 
@@ -22,9 +33,10 @@ public class EnemyAI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agent.stoppingDistance = stoppingDistance;
         animator = GetComponent<Animator>();
-
+        weapons = GetComponent<WeaponHandler>();
         bodies = GetComponentsInChildren<Rigidbody>();
 
+        
         GameObject player = GameObject.Find("PlayerMeatMan");
         if (player != null)
         {
@@ -33,6 +45,13 @@ public class EnemyAI : MonoBehaviour
         else
         {
             Debug.LogWarning("EnemyAI: Could not find GameObject named 'PlayerMeatMan'.");
+        }
+
+        // erm... uh huh!
+        MeleeWeapon leftMeleeWeapon = Instantiate(leftWeapon).GetComponent<MeleeWeapon>();
+        if (leftMeleeWeapon != null)
+        {
+            weapons.PickupWeapon(leftMeleeWeapon);
         }
     }
 
@@ -58,6 +77,16 @@ public class EnemyAI : MonoBehaviour
                 // Stop moving and rotate to face the player
                 agent.ResetPath();
                 RotateToward(target.position);
+
+                // Check if we are facing the player & attack
+                if (Vector3.Angle(target.forward, transform.position - target.position) < attackRadius)
+                {
+                    // TODO: make this attack with the appropriate weapon(s)
+                    if (leftWeapon != null)
+                    {
+                        weapons.AttemptAttack(0);
+                    }
+                }
             }
         }
         else
