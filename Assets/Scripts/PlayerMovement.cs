@@ -21,6 +21,9 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("Radius of the sphere used for checking if the player is grounded.")]
     public float groundCheckRadius = 0.2f;
 
+    [SerializeField] private float fallSpeed = 9.8f;
+    private bool isJumping = false;
+
     private Rigidbody rb;
     private PlayerInputHandler input;
     private Animator animator;
@@ -63,6 +66,11 @@ public class PlayerMovement : MonoBehaviour
         // Apply movement to the Rigidbody
         transform.position += moveDirection * moveSpeed * Time.fixedDeltaTime;
 
+        if (!isGrounded && !isJumping)
+        {
+            transform.position += Vector3.down * fallSpeed * Time.fixedDeltaTime;
+        }
+
         // Debug: Draw a ray in the direction of movement
         Debug.DrawRay(rb.position, moveDirection * 3f, Color.blue);                         
     }
@@ -81,10 +89,10 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator PerformJump()
     {
         canJump = false;
+        isJumping = true;
         animator.SetTrigger("Jump");
 
-        // Wait for animation wind-up before jumping
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.3f); // animation windup
 
         float jumpHeight = 2.5f;
         float jumpDuration = 0.8f;
@@ -93,7 +101,6 @@ public class PlayerMovement : MonoBehaviour
         Vector3 start = transform.position;
         Vector3 peak = start + Vector3.up * jumpHeight;
 
-        // Jump up
         while (elapsed < jumpDuration / 2f)
         {
             float t = elapsed / (jumpDuration / 2f);
@@ -102,7 +109,6 @@ public class PlayerMovement : MonoBehaviour
             yield return null;
         }
 
-        // Jump down
         elapsed = 0f;
         Vector3 landing = start;
         while (elapsed < jumpDuration / 2f)
@@ -113,8 +119,8 @@ public class PlayerMovement : MonoBehaviour
             yield return null;
         }
 
+        isJumping = false;
         yield return new WaitForSeconds(0.2f);
         canJump = true;
     }
-
 }
