@@ -81,6 +81,7 @@ public class Health : MonoBehaviour
             {
                 animator.SetBool("isDead", true);
                 animator.SetTrigger("Die");
+                GameManager.Instance?.TriggerGameOver();
                 Destroy(gameObject, 4f);
             }
             else if(gameObject.CompareTag("Emeny"))
