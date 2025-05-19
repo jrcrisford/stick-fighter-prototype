@@ -1693,6 +1693,14 @@ MonoBehaviour:
   target: {fileID: 0}
   detectionRadius: 100
   stoppingDistance: 4
+  attackRadius: 10
+  weaponPool:
+  - {fileID: 1098866949288300362, guid: 9b03521ea9bfa4c35a0495f3316c934f, type: 3}
+  - {fileID: 7002477080196451339, guid: d595e3e900747499ba76093b58ce2a54, type: 3}
+  - {fileID: 3085295687475901065, guid: 9a66d2d0470964454b55365351576906, type: 3}
+  - {fileID: 7216223461345823651, guid: adf9da430750a435a8a469a00ac75428, type: 3}
+  - {fileID: 1177627334609955561, guid: 7bdcc41deadec4610abdc32d22df4806, type: 3}
+  leftWeapon: {fileID: 0}
   moveSpeed: 7
   rotationSpeed: 5
 --- !u!114 &4367122785827036119

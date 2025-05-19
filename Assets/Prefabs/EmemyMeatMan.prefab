@@ -115,7 +115,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e2764a2632a359468476946edff2dab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
 --- !u!1 &5508698360364753905
 GameObject:
   m_ObjectHideFlags: 0
@@ -171,6 +170,7 @@ MonoBehaviour:
   maxDurability: 0
   currentDurability: 0
   attackOrigin: {fileID: 3558734122262279487}
+  hitParticleSystem: {fileID: 0}
 --- !u!1 &6054859074587148727
 GameObject:
   m_ObjectHideFlags: 0
@@ -464,6 +464,15 @@ MonoBehaviour:
   target: {fileID: 0}
   detectionRadius: 15
   stoppingDistance: 2
+  attackRadius: 10
+  weaponPool:
+  - {fileID: 1098866949288300362, guid: 9b03521ea9bfa4c35a0495f3316c934f, type: 3}
+  - {fileID: 7002477080196451339, guid: d595e3e900747499ba76093b58ce2a54, type: 3}
+  - {fileID: 3085295687475901065, guid: 9a66d2d0470964454b55365351576906, type: 3}
+  - {fileID: 7216223461345823651, guid: adf9da430750a435a8a469a00ac75428, type: 3}
+  - {fileID: 1177627334609955561, guid: 7bdcc41deadec4610abdc32d22df4806, type: 3}
+  leftWeapon: {fileID: 0}
+  moveSpeed: 4
   rotationSpeed: 5
 --- !u!114 &8923802003456278065
 MonoBehaviour:

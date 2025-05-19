@@ -85,6 +85,7 @@ public class WeaponHandler : MonoBehaviour
 
     private void EquipWeapon(MeleeWeapon weapon, Transform hand, bool isLeft)
     {
+        Light light = weapon.GetComponent<Light>();
         Transform grip = weapon.transform.Find("GripPoint");
         if (grip != null)
         {
@@ -92,7 +93,7 @@ public class WeaponHandler : MonoBehaviour
 
             // Position the weapon so its GripPoint aligns with the hand
             weapon.transform.position = hand.position;
-            weapon.transform.rotation = hand.rotation * Quaternion.Euler(-50, -20, 90);
+            weapon.transform.rotation = hand.rotation * Quaternion.Euler(90, -55, 85);
 
             // Offset the weapon to match the grip's relative transform
             Vector3 gripOffset = weapon.transform.position - grip.position;
@@ -114,5 +115,6 @@ public class WeaponHandler : MonoBehaviour
 
         if (isLeft) leftWeapon = weapon;
         else rightWeapon = weapon;
+        light.enabled = false;
     }
 }

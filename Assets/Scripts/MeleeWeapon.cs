@@ -183,9 +183,6 @@ public class MeleeWeapon : MonoBehaviour
                 hitSomething = true;
                 Debug.Log($"{weaponType} hit {hit.name} for {damage} damage");
 
-                // Do attack hit particles
-                hitParticleSystem.Play();
-
                 // Knockback and temporary NavMeshAgent disable
                 Rigidbody rb = hit.attachedRigidbody;
                 NavMeshAgent agent = hit.GetComponent<NavMeshAgent>();
@@ -204,6 +201,9 @@ public class MeleeWeapon : MonoBehaviour
 
                     // Re-enable NavMeshAgent after delay
                     StartCoroutine(ReenableAgent(agent, 1f));
+                    
+                    // Do attack hit particles
+                    hitParticleSystem.Play();
                 }
             }
         }

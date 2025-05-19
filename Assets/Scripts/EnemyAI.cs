@@ -1,6 +1,3 @@
-using System;
-using System.Runtime.CompilerServices;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -15,6 +12,7 @@ public class EnemyAI : MonoBehaviour
     public float stoppingDistance = 2f;
     [Tooltip("This is in Degrees not Rads or Quats")]
     public float attackRadius = 10f;
+    public GameObject[] weaponPool;
     public GameObject leftWeapon;
     // public GameObject rightWeapon;
 
@@ -46,9 +44,12 @@ public class EnemyAI : MonoBehaviour
         {
             Debug.LogWarning("EnemyAI: Could not find GameObject named 'PlayerMeatMan'.");
         }
-
+        if (leftWeapon == null)
+        {
+            leftWeapon = weaponPool[Random.Range(0, weaponPool.Length)];
+        }
         // erm... uh huh!
-        MeleeWeapon leftMeleeWeapon = Instantiate(leftWeapon).GetComponent<MeleeWeapon>();
+            MeleeWeapon leftMeleeWeapon = Instantiate(leftWeapon).GetComponent<MeleeWeapon>();
         if (leftMeleeWeapon != null)
         {
             weapons.PickupWeapon(leftMeleeWeapon);
