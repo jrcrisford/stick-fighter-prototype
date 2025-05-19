@@ -15,8 +15,8 @@ public class EnemyAI : MonoBehaviour
     public float stoppingDistance = 2f;
     [Tooltip("This is in Degrees not Rads or Quats")]
     public float attackRadius = 10f;
-    public MeleeWeapon leftWeapon;
-    // public MeleeWeapon rightWeapon;
+    public GameObject leftWeapon;
+    // public GameObject rightWeapon;
 
     [Header("Movement Settings")]
     public float moveSpeed = 4f;
@@ -36,8 +36,7 @@ public class EnemyAI : MonoBehaviour
         weapons = GetComponent<WeaponHandler>();
         bodies = GetComponentsInChildren<Rigidbody>();
 
-        weapons.PickupWeapon(leftWeapon);
-
+        
         GameObject player = GameObject.Find("PlayerMeatMan");
         if (player != null)
         {
@@ -46,6 +45,13 @@ public class EnemyAI : MonoBehaviour
         else
         {
             Debug.LogWarning("EnemyAI: Could not find GameObject named 'PlayerMeatMan'.");
+        }
+
+        // erm... uh huh!
+        MeleeWeapon leftMeleeWeapon = Instantiate(leftWeapon).GetComponent<MeleeWeapon>();
+        if (leftMeleeWeapon != null)
+        {
+            weapons.PickupWeapon(leftMeleeWeapon);
         }
     }
 
@@ -76,7 +82,6 @@ public class EnemyAI : MonoBehaviour
                 if (Vector3.Angle(target.forward, transform.position - target.position) < attackRadius)
                 {
                     // TODO: make this attack with the appropriate weapon(s)
-                    Debug.Log("Attempting to attack player...");
                     if (leftWeapon != null)
                     {
                         weapons.AttemptAttack(0);

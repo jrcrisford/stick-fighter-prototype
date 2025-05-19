@@ -69,7 +69,6 @@ public class WeaponHandler : MonoBehaviour
 
     public void PickupWeapon(MeleeWeapon weapon)
     {
-        if (!isPlayer) Debug.Log("Enemy picked up weapon");
         if (equipToLeftNext)
         {
             if (leftWeapon != null) Destroy(leftWeapon.gameObject);
