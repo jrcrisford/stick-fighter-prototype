@@ -15,7 +15,7 @@ public class WeaponHandler : MonoBehaviour
     private bool isPlayer = false;
     private bool equipToLeftNext = true;
 
-    private void Awake()
+    void Awake()
     {
         animator = GetComponent<Animator>();
 
@@ -27,6 +27,7 @@ public class WeaponHandler : MonoBehaviour
         Transform[] allChildren = GetComponentsInChildren<Transform>(true);
         foreach (Transform t in allChildren)
         {
+            Debug.Log(t.name);
             if (t.name == "hand.L_end") leftHand = t;
             if (t.name == "hand.R_end") rightHand = t;
         }

@@ -44,12 +44,16 @@ public class EnemyAI : MonoBehaviour
         {
             Debug.LogWarning("EnemyAI: Could not find GameObject named 'PlayerMeatMan'.");
         }
+    }
+
+    private void Start()
+    {
         if (leftWeapon == null)
         {
             leftWeapon = weaponPool[Random.Range(0, weaponPool.Length)];
         }
         // erm... uh huh!
-            MeleeWeapon leftMeleeWeapon = Instantiate(leftWeapon).GetComponent<MeleeWeapon>();
+        MeleeWeapon leftMeleeWeapon = Instantiate(leftWeapon).GetComponent<MeleeWeapon>();
         if (leftMeleeWeapon != null)
         {
             weapons.PickupWeapon(leftMeleeWeapon);
