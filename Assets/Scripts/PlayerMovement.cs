@@ -83,8 +83,11 @@ public class PlayerMovement : MonoBehaviour
         canJump = false;
         animator.SetTrigger("Jump");
 
-        float jumpHeight = 2f;
-        float jumpDuration = 0.4f;
+        // Wait for animation wind-up before jumping
+        yield return new WaitForSeconds(0.3f);
+
+        float jumpHeight = 2.5f;
+        float jumpDuration = 0.8f;
 
         float elapsed = 0f;
         Vector3 start = transform.position;
@@ -101,7 +104,7 @@ public class PlayerMovement : MonoBehaviour
 
         // Jump down
         elapsed = 0f;
-        Vector3 landing = start; // Ground is assumed flat
+        Vector3 landing = start;
         while (elapsed < jumpDuration / 2f)
         {
             float t = elapsed / (jumpDuration / 2f);
@@ -110,7 +113,7 @@ public class PlayerMovement : MonoBehaviour
             yield return null;
         }
 
-        yield return new WaitForSeconds(0.2f); // Optional delay before re-enabling jump
+        yield return new WaitForSeconds(0.2f);
         canJump = true;
     }
 
