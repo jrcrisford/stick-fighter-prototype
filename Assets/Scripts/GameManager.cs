@@ -62,7 +62,6 @@ public class GameManager : MonoBehaviour
         return total;
     }
 
-
     public void TriggerGameOver()
     {
         if (isGameOver) return;
