@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -36,6 +37,11 @@ public class PauseMenu : MonoBehaviour
             }
         }
 
+        if(GameManager.Instance.IsGameOver)
+        {
+            GameWin(GameManager.Instance.GetTotalScore());
+        }
+
         if(player == null && !gamePaused)
         {
             GameOver();
@@ -59,17 +65,23 @@ public class PauseMenu : MonoBehaviour
 
     public void GameOver()
     {
+        double total = Math.Round(GameManager.Instance.GetTotalScore(), 2);
+
         gameOverUI.SetActive(true);
         Time.timeScale = 0f;
-        score.text = GameManager.Instance.GetTotalScore().ToString();
+        score.text = total.ToString();
         gameOver = true;
     }
 
     public void GameWin(float scoreNumber)
     {
+        double total = Math.Round(scoreNumber, 2);
+
+        Debug.Log("It work");
+
         gameWinUI.SetActive(true);
         Time.timeScale = 0f;
-        score2.text = scoreNumber.ToString();
+        score2.text = total.ToString();
         gameOver = true;
     }
 
