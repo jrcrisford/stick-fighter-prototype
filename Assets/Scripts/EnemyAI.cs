@@ -6,6 +6,10 @@ public class EnemyAI : MonoBehaviour
     public Transform target;
     public float detectionRadius = 10f;
     public float stoppingDistance = 2f;
+
+
+    [Header("Movement Settings")]
+    public float moveSpeed = 4f;
     public float rotationSpeed = 5f;
 
     private NavMeshAgent agent;
