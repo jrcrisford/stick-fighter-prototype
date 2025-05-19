@@ -364,18 +364,6 @@ PrefabInstance:
       value: meatmanV5 (29)
       objectReference: {fileID: 0}
     - target: {fileID: 5341239257285358333, guid: 40a56c1eb1b00c04fac0df4531d0eca3, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 3.8549
-      objectReference: {fileID: 0}
-    - target: {fileID: 5341239257285358333, guid: 40a56c1eb1b00c04fac0df4531d0eca3, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 3.8549
-      objectReference: {fileID: 0}
-    - target: {fileID: 5341239257285358333, guid: 40a56c1eb1b00c04fac0df4531d0eca3, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 3.8549
-      objectReference: {fileID: 0}
-    - target: {fileID: 5341239257285358333, guid: 40a56c1eb1b00c04fac0df4531d0eca3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 66.17
       objectReference: {fileID: 0}
@@ -3826,7 +3814,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1299751788}
-  - component: {fileID: 1299751789}
   m_Layer: 0
   m_Name: MeatMen
   m_TagString: Untagged
@@ -3879,18 +3866,6 @@ Transform:
   - {fileID: 1485702988}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1299751789
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1299751787}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a26a6e1c77b670448ace4a862eb804f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1320278263
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5743,7 +5718,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: eab09086ca1774aeb81d9c13f70798be, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5783,7 +5758,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.0040481333, y: -0, z: -0, w: 0.9999919}
   m_LocalPosition: {x: 1.3126516, y: -0.6, z: -45.1}
-  m_LocalScale: {x: 12.088404, y: 12.088404, z: 12.088404}
+  m_LocalScale: {x: 52.89442, y: 52.89442, z: 52.89442}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
