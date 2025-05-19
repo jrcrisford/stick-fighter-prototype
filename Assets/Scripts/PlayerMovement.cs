@@ -21,9 +21,6 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("Radius of the sphere used for checking if the player is grounded.")]
     public float groundCheckRadius = 0.2f;
 
-    [SerializeField] private float fallSpeed = 9.8f;
-    private bool isJumping = false;
-
     private Rigidbody rb;
     private PlayerInputHandler input;
     private Animator animator;
@@ -34,7 +31,6 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();                     // Get the Ridgidbody, input handler, and animator components
-        rb.isKinematic = true;
         input = GetComponent<PlayerInputHandler>();         // <<
         animator = GetComponent<Animator>();                // <<
     }
@@ -47,32 +43,25 @@ public class PlayerMovement : MonoBehaviour
         // Update the animator params each frame to sync with rendering
         animator.SetFloat("Speed", input.MoveInput.magnitude);
         animator.SetBool("isGrounded", isGrounded);
-
-        Debug.Log($"Jump input: {input.JumpInput}, Grounded: {isGrounded}, CanJump: {canJump}");
-
-
-        if (input.JumpInput && isGrounded && canJump)
-        {
-            StartCoroutine(PerformJump());
-        }
     }
 
     private void FixedUpdate()
     {
         // Convert 2D input into a 3D direction vector
-        Vector2 move = input.MoveInput;                                                   
+        Vector2 move = input.MoveInput;
         Vector3 moveDirection = new Vector3(move.x, 0f, move.y);
 
         // Apply movement to the Rigidbody
-        transform.position += moveDirection * moveSpeed * Time.fixedDeltaTime;
+        rb.MovePosition(rb.position + moveDirection * moveSpeed * Time.fixedDeltaTime);
 
-        if (!isGrounded && !isJumping)
+        // Check if jump input is pressed and player is grounded
+        if (input.JumpInput && isGrounded && canJump)
         {
-            transform.position += Vector3.down * fallSpeed * Time.fixedDeltaTime;
+            StartCoroutine(PerformJump());
         }
 
         // Debug: Draw a ray in the direction of movement
-        Debug.DrawRay(rb.position, moveDirection * 3f, Color.blue);                         
+        Debug.DrawRay(rb.position, moveDirection * 3f, Color.blue);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -88,39 +77,20 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private IEnumerator PerformJump()
     {
+        // Disable jumping until cooldown is over
         canJump = false;
-        isJumping = true;
+
+        // Trigger jump animation
         animator.SetTrigger("Jump");
 
-        yield return new WaitForSeconds(0.3f); // animation windup
+        // Small delay to allow animation anticipation before jump force
+        yield return new WaitForSeconds(0.3f);
 
-        float jumpHeight = 2.5f;
-        float jumpDuration = 0.8f;
+        // Apply jump force
+        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
 
-        float elapsed = 0f;
-        Vector3 start = transform.position;
-        Vector3 peak = start + Vector3.up * jumpHeight;
-
-        while (elapsed < jumpDuration / 2f)
-        {
-            float t = elapsed / (jumpDuration / 2f);
-            transform.position = Vector3.Lerp(start, peak, t);
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-
-        elapsed = 0f;
-        Vector3 landing = start;
-        while (elapsed < jumpDuration / 2f)
-        {
-            float t = elapsed / (jumpDuration / 2f);
-            transform.position = Vector3.Lerp(peak, landing, t);
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-
-        isJumping = false;
-        yield return new WaitForSeconds(0.2f);
+        // Wait for cooldown before re-enabling jumping
+        yield return new WaitForSeconds(0.5f);
         canJump = true;
     }
 }

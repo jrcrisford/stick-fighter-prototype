@@ -55,9 +55,7 @@ MonoBehaviour:
   maxDurability: 0
   currentDurability: 0
   attackOrigin: {fileID: 2150394958943334556}
-  targetLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
+  hitParticleSystem: {fileID: 0}
 --- !u!1 &5115854278180291793
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,7 +202,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e2764a2632a359468476946edff2dab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
 --- !u!1001 &6239233137964724455
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -437,7 +434,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f74054921c1dd5849ac6178159cbecc9, type: 3}
       propertyPath: m_Name
-      value: EmemyMeatMan 1
+      value: EnemyMeatMan(withRagdoll)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f74054921c1dd5849ac6178159cbecc9, type: 3}
       propertyPath: m_IsActive
@@ -1604,7 +1601,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.4
   m_Height: 2.25
@@ -1694,7 +1691,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  detectionRadius: 15
+  detectionRadius: 100
   stoppingDistance: 2
   rotationSpeed: 5
 --- !u!114 &4367122785827036119
