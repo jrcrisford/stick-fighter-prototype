@@ -39,7 +39,9 @@ public class PauseMenu : MonoBehaviour
 
         if(GameManager.Instance.IsGameOver)
         {
-            GameWin(GameManager.Instance.GetTotalScore());
+            //GameWin(GameManager.Instance.GetTotalScore());
+            //GameManager.Instance.TriggerGameOver();
+            
         }
 
         if(player == null && !gamePaused)

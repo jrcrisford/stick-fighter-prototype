@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
 
         // TODO: Replace with actual UI display or transition
         // Example: UIManager.Instance.ShowGameOverScreen(totalScore);
-        //PauseMenu.Instance?.GameWin(totalScore);
+        PauseMenu.Instance?.GameWin(totalScore);
     }
 
 
