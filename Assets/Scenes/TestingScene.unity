@@ -2479,14 +2479,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1411680144297453620, guid: aea001b2d765d144b903bb644588b726, type: 3}
-      propertyPath: leftWeapon
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3936382966124721804, guid: aea001b2d765d144b903bb644588b726, type: 3}
-      propertyPath: leftWeapon
-      value: 
-      objectReference: {fileID: 1098866949288300362, guid: 9b03521ea9bfa4c35a0495f3316c934f, type: 3}
     - target: {fileID: 7395054831058919431, guid: aea001b2d765d144b903bb644588b726, type: 3}
       propertyPath: m_Name
       value: EnemyMeatMan(withRagdoll)
@@ -2532,8 +2524,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 4950745150802709918, guid: aea001b2d765d144b903bb644588b726, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aea001b2d765d144b903bb644588b726, type: 3}
