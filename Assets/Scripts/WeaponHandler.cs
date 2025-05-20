@@ -27,7 +27,6 @@ public class WeaponHandler : MonoBehaviour
         Transform[] allChildren = GetComponentsInChildren<Transform>(true);
         foreach (Transform t in allChildren)
         {
-            Debug.Log(t.name);
             if (t.name == "hand.L_end") leftHand = t;
             if (t.name == "hand.R_end") rightHand = t;
         }

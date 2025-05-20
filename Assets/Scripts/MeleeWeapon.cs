@@ -176,7 +176,7 @@ public class MeleeWeapon : MonoBehaviour
             if (hit.transform.root == transform.root) continue;
 
             // Apply damage to any object with a Health component
-            Health health = hit.GetComponent<Health>();
+            Health health = hit.GetComponentInParent<Health>();
             if (health != null)
             {
                 health.TakeDamage(damage);
