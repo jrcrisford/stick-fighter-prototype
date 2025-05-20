@@ -21,6 +21,8 @@ public class EnemyAI : MonoBehaviour
     [Header("Movement Settings")]
     public float moveSpeed = 4f;
     public float rotationSpeed = 5f;
+    [Header("Getup animation")]
+    [SerializeField] private string GetUpAnimationName; 
 
     private NavMeshAgent agent;
     private Animator animator;
@@ -28,6 +30,7 @@ public class EnemyAI : MonoBehaviour
     private Transform hipBone;
 
     private Rigidbody[] bodies;
+    private bool isGettingUp = false;
 
     private void Awake()
     {
@@ -38,7 +41,7 @@ public class EnemyAI : MonoBehaviour
         bodies = GetComponentsInChildren<Rigidbody>();
         hipBone = animator.GetBoneTransform(HumanBodyBones.Hips);
         if (hipBone == null) Debug.LogWarning($"Could not find hip bone transform for {gameObject.name}");
-        
+
         GameObject player = GameObject.Find("PlayerMeatMan");
         if (player != null)
         {
@@ -124,6 +127,7 @@ public class EnemyAI : MonoBehaviour
         }
 
         hipBone.position = originalHipPos;
+        animator.Rebind();
     }
 
     public void EnableRagdoll()
@@ -148,6 +152,11 @@ public class EnemyAI : MonoBehaviour
             rb.isKinematic = true;
         }
 
+        foreach (Collider col in GetComponentsInChildren<Collider>())
+        {
+            col.enabled = true;
+        }
+
         animator.enabled = true;
         agent.enabled = true;
     }
@@ -159,12 +168,18 @@ public class EnemyAI : MonoBehaviour
 
     private IEnumerator _tempRagdoll(float sec)
     {
+        agent.ResetPath();
         EnableRagdoll();
 
         yield return new WaitForSeconds(sec);
 
         _alignToHips();
         DisableRagdoll();
+        animator.Play(GetUpAnimationName);
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName(GetUpAnimationName))
+        {
+            agent.SetDestination(target.position);
+        }
     }
 
     private void RotateToward(Vector3 targetPos)

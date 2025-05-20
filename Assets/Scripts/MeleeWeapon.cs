@@ -39,7 +39,7 @@ public class MeleeWeapon : MonoBehaviour
     [SerializeField] private ParticleSystem hitParticleSystem;
 
     private float lastAttackTime;                                               // Time when the last attack happened
-     HashSet<GameObject> damaged = new HashSet<GameObject>();
+    HashSet<GameObject> damaged;
 
     private void Awake()
     {
@@ -47,6 +47,13 @@ public class MeleeWeapon : MonoBehaviour
         if (usePresetStats) SetWeaponType();
         // Reset the durability on start
         currentDurability = maxDurability;
+
+        if (attackOrigin == null)
+        {
+            attackOrigin = transform;
+        }
+
+        damaged = new HashSet<GameObject>();
     }
 
     // Sets the default values for each weapon type
@@ -178,7 +185,11 @@ public class MeleeWeapon : MonoBehaviour
             if (hit.transform.root == transform.root) continue;
 
             // Apply damage to any object with a Health component
-            Health health = hit.GetComponentInParent<Health>();
+            Health health = hit.GetComponent<Health>();
+            if (health == null)
+                health = hit.GetComponentInParent<Health>();
+            if (health == null)
+                health = hit.GetComponentInChildren<Health>();
             if (health != null && !damaged.Contains(health.gameObject))
             {
                 damaged.Add(health.gameObject);
@@ -206,7 +217,7 @@ public class MeleeWeapon : MonoBehaviour
                     StartCoroutine(ReenableAgent(agent, 1f));
                     
                     // Do attack hit particles
-                    hitParticleSystem.Play();
+                    // hitParticleSystem.Play();
                 }
             }
         }
@@ -263,5 +274,4 @@ public class MeleeWeapon : MonoBehaviour
             agent.velocity = Vector3.zero;
         }
     }
-
 }

@@ -1613,6 +1613,7 @@ MonoBehaviour:
   leftWeapon: {fileID: 0}
   moveSpeed: 7
   rotationSpeed: 5
+  GetUpAnimationName: GetUp
 --- !u!114 &4367122785827036119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1655,7 +1656,7 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 3
+          m_FloatArgument: 2
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
