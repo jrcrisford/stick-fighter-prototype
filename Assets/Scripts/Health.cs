@@ -11,6 +11,7 @@ public class Health : MonoBehaviour
 
     [Header("Events")]
     public UnityEvent onDeath;
+    public UnityEvent onHit;
     public UnityEvent<float> onDamage;
     public UnityEvent<float> onHeal;
 
@@ -55,6 +56,7 @@ public class Health : MonoBehaviour
         if (animator != null)
         {
             animator.SetTrigger("Hit");
+            onHit?.Invoke();
         }
     }
 

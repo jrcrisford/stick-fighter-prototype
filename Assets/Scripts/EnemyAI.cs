@@ -1,3 +1,5 @@
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -23,6 +25,7 @@ public class EnemyAI : MonoBehaviour
     private NavMeshAgent agent;
     private Animator animator;
     private WeaponHandler weapons;
+    private Transform hipBone;
 
     private Rigidbody[] bodies;
 
@@ -33,7 +36,8 @@ public class EnemyAI : MonoBehaviour
         animator = GetComponent<Animator>();
         weapons = GetComponent<WeaponHandler>();
         bodies = GetComponentsInChildren<Rigidbody>();
-
+        hipBone = animator.GetBoneTransform(HumanBodyBones.Hips);
+        if (hipBone == null) Debug.LogWarning($"Could not find hip bone transform for {gameObject.name}");
         
         GameObject player = GameObject.Find("PlayerMeatMan");
         if (player != null)
@@ -109,6 +113,19 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    private void _alignToHips()
+    {
+        Vector3 originalHipPos = hipBone.position;
+        transform.position = hipBone.position;
+
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit info))
+        {
+            transform.position = new Vector3(transform.position.x, info.point.y, transform.position.z);
+        }
+
+        hipBone.position = originalHipPos;
+    }
+
     public void EnableRagdoll()
     {
         animator.enabled = false;
@@ -120,6 +137,34 @@ public class EnemyAI : MonoBehaviour
             rb.useGravity = true;
             rb.isKinematic = false;
         }
+    }
+
+    private void DisableRagdoll()
+    {
+        foreach (Rigidbody rb in bodies)
+        {
+            rb.detectCollisions = false;
+            rb.useGravity = false;
+            rb.isKinematic = true;
+        }
+
+        animator.enabled = true;
+        agent.enabled = true;
+    }
+
+    public void TempRagdoll(float sec)
+    {
+        StartCoroutine(_tempRagdoll(sec));
+    }
+
+    private IEnumerator _tempRagdoll(float sec)
+    {
+        EnableRagdoll();
+
+        yield return new WaitForSeconds(sec);
+
+        _alignToHips();
+        DisableRagdoll();
     }
 
     private void RotateToward(Vector3 targetPos)

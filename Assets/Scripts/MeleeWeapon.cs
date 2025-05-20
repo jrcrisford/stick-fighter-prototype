@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class MeleeWeapon : MonoBehaviour
 {
@@ -38,6 +39,7 @@ public class MeleeWeapon : MonoBehaviour
     [SerializeField] private ParticleSystem hitParticleSystem;
 
     private float lastAttackTime;                                               // Time when the last attack happened
+     HashSet<GameObject> damaged = new HashSet<GameObject>();
 
     private void Awake()
     {
@@ -177,8 +179,9 @@ public class MeleeWeapon : MonoBehaviour
 
             // Apply damage to any object with a Health component
             Health health = hit.GetComponentInParent<Health>();
-            if (health != null)
+            if (health != null && !damaged.Contains(health.gameObject))
             {
+                damaged.Add(health.gameObject);
                 health.TakeDamage(damage);
                 hitSomething = true;
                 Debug.Log($"{weaponType} hit {hit.name} for {damage} damage");
@@ -207,6 +210,8 @@ public class MeleeWeapon : MonoBehaviour
                 }
             }
         }
+
+        damaged.Clear();
 
         // TODO: Add knockback effect
 
