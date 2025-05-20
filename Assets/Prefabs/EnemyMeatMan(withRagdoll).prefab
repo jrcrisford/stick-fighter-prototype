@@ -988,6 +988,11 @@ CharacterJoint:
   m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!4 &3991154462730963893 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6702067868811122403, guid: f74054921c1dd5849ac6178159cbecc9, type: 3}
+  m_PrefabInstance: {fileID: 7665666296335342934}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4034484371726627271 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6745465116661247121, guid: f74054921c1dd5849ac6178159cbecc9, type: 3}
@@ -1613,7 +1618,8 @@ MonoBehaviour:
   leftWeapon: {fileID: 0}
   moveSpeed: 7
   rotationSpeed: 5
-  GetUpAnimationName: GetUp
+  GetUpAnimationName: Get Up
+  spineBone: {fileID: 3991154462730963893}
 --- !u!114 &4367122785827036119
 MonoBehaviour:
   m_ObjectHideFlags: 0

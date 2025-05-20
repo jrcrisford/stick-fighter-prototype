@@ -55,7 +55,7 @@ public class Health : MonoBehaviour
 
         if (animator != null)
         {
-            animator.SetTrigger("Hit");
+            //animator.SetTrigger("Hit");
             onHit?.Invoke();
         }
     }

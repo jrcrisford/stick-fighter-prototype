@@ -103,6 +103,25 @@ public class MeleeWeapon : MonoBehaviour
                 break;
         }
     }
+    Health FindHealth(Collider hit)
+    {
+        Transform root = hit.attachedRigidbody != null ? hit.attachedRigidbody.transform.root : hit.transform.root;
+
+        // Try getting Health directly from root (normal case)
+        Health health = root.GetComponent<Health>();
+        if (health != null) return health;
+
+        // As fallback, manually search up
+        Transform current = hit.transform;
+        while (current != null)
+        {
+            health = current.GetComponent<Health>();
+            if (health != null) return health;
+            current = current.parent;
+        }
+
+        return null;
+    }
 
     // Called when something (like a player or enemy) trigger an attack using this weapon
     public void TryAttack()
@@ -183,13 +202,11 @@ public class MeleeWeapon : MonoBehaviour
         foreach (Collider hit in hits)
         {
             if (hit.transform.root == transform.root) continue;
+            Debug.Log($"Detected: {hit.name}, has Health: {hit.GetComponentInParent<Health>() != null}");
 
             // Apply damage to any object with a Health component
-            Health health = hit.GetComponent<Health>();
-            if (health == null)
-                health = hit.GetComponentInParent<Health>();
-            if (health == null)
-                health = hit.GetComponentInChildren<Health>();
+            Health health = FindHealth(hit);
+            
             if (health != null && !damaged.Contains(health.gameObject))
             {
                 damaged.Add(health.gameObject);

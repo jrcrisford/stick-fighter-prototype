@@ -22,15 +22,14 @@ public class EnemyAI : MonoBehaviour
     public float moveSpeed = 4f;
     public float rotationSpeed = 5f;
     [Header("Getup animation")]
-    [SerializeField] private string GetUpAnimationName; 
+    [SerializeField] private string GetUpAnimationName;
+    [SerializeField] private Transform spineBone;
 
     private NavMeshAgent agent;
     private Animator animator;
     private WeaponHandler weapons;
-    private Transform hipBone;
 
     private Rigidbody[] bodies;
-    private bool isGettingUp = false;
 
     private void Awake()
     {
@@ -39,8 +38,8 @@ public class EnemyAI : MonoBehaviour
         animator = GetComponent<Animator>();
         weapons = GetComponent<WeaponHandler>();
         bodies = GetComponentsInChildren<Rigidbody>();
-        hipBone = animator.GetBoneTransform(HumanBodyBones.Hips);
-        if (hipBone == null) Debug.LogWarning($"Could not find hip bone transform for {gameObject.name}");
+        
+        if (spineBone == null) Debug.LogWarning($"Could not find hip bone transform for {gameObject.name}");
 
         GameObject player = GameObject.Find("PlayerMeatMan");
         if (player != null)
@@ -116,17 +115,17 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    private void _alignToHips()
+    private void _alignToSpine()
     {
-        Vector3 originalHipPos = hipBone.position;
-        transform.position = hipBone.position;
+        Vector3 originalSpinePos = spineBone.position;
+        transform.position = spineBone.position;
 
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit info))
         {
             transform.position = new Vector3(transform.position.x, info.point.y, transform.position.z);
         }
 
-        hipBone.position = originalHipPos;
+        spineBone.position = originalSpinePos;
         animator.Rebind();
     }
 
@@ -155,6 +154,7 @@ public class EnemyAI : MonoBehaviour
         foreach (Collider col in GetComponentsInChildren<Collider>())
         {
             col.enabled = true;
+            col.isTrigger = false;
         }
 
         animator.enabled = true;
@@ -168,18 +168,13 @@ public class EnemyAI : MonoBehaviour
 
     private IEnumerator _tempRagdoll(float sec)
     {
-        agent.ResetPath();
         EnableRagdoll();
 
         yield return new WaitForSeconds(sec);
 
-        _alignToHips();
+        _alignToSpine();
         DisableRagdoll();
         animator.Play(GetUpAnimationName);
-        if (!animator.GetCurrentAnimatorStateInfo(0).IsName(GetUpAnimationName))
-        {
-            agent.SetDestination(target.position);
-        }
     }
 
     private void RotateToward(Vector3 targetPos)
