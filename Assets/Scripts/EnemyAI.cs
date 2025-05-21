@@ -6,6 +6,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(WeaponHandler))]
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(CapsuleCollider))]
 
 public class EnemyAI : MonoBehaviour
 {
@@ -28,7 +29,7 @@ public class EnemyAI : MonoBehaviour
     private NavMeshAgent agent;
     private Animator animator;
     private WeaponHandler weapons;
-
+    private Collider enemyHitbox;
     private Rigidbody[] bodies;
 
     private void Awake()
@@ -38,6 +39,7 @@ public class EnemyAI : MonoBehaviour
         animator = GetComponent<Animator>();
         weapons = GetComponent<WeaponHandler>();
         bodies = GetComponentsInChildren<Rigidbody>();
+        enemyHitbox = GetComponent<CapsuleCollider>();
         
         if (spineBone == null) Debug.LogWarning($"Could not find hip bone transform for {gameObject.name}");
 
@@ -131,6 +133,7 @@ public class EnemyAI : MonoBehaviour
 
     public void EnableRagdoll()
     {
+        enemyHitbox.enabled = false;
         animator.enabled = false;
         agent.enabled = false;
 
@@ -157,6 +160,7 @@ public class EnemyAI : MonoBehaviour
             col.isTrigger = false;
         }
 
+        enemyHitbox.enabled = true;
         animator.enabled = true;
         agent.enabled = true;
     }

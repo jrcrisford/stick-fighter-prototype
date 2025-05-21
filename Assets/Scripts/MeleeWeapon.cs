@@ -39,7 +39,6 @@ public class MeleeWeapon : MonoBehaviour
     [SerializeField] private ParticleSystem hitParticleSystem;
 
     private float lastAttackTime;                                               // Time when the last attack happened
-    HashSet<GameObject> damaged;
 
     private void Awake()
     {
@@ -52,8 +51,6 @@ public class MeleeWeapon : MonoBehaviour
         {
             attackOrigin = transform;
         }
-
-        damaged = new HashSet<GameObject>();
     }
 
     // Sets the default values for each weapon type
@@ -103,26 +100,7 @@ public class MeleeWeapon : MonoBehaviour
                 break;
         }
     }
-    Health FindHealth(Collider hit)
-    {
-        Transform root = hit.attachedRigidbody != null ? hit.attachedRigidbody.transform.root : hit.transform.root;
-
-        // Try getting Health directly from root (normal case)
-        Health health = root.GetComponent<Health>();
-        if (health != null) return health;
-
-        // As fallback, manually search up
-        Transform current = hit.transform;
-        while (current != null)
-        {
-            health = current.GetComponent<Health>();
-            if (health != null) return health;
-            current = current.parent;
-        }
-
-        return null;
-    }
-
+    
     // Called when something (like a player or enemy) trigger an attack using this weapon
     public void TryAttack()
     {
@@ -144,50 +122,7 @@ public class MeleeWeapon : MonoBehaviour
         }
 
         lastAttackTime = Time.time;
-        /* bool hitSomething = false;
-
-        // Detect targets in range using a sphere overlap
-        Collider[] hits = Physics.OverlapSphere(attackOrigin.position, attackRange);
-        foreach (Collider hit in hits)
-        {
-            if (hit.transform.root == transform.root) continue;
-
-            // Apply damage to any object with a Health component
-            Health health = hit.GetComponent<Health>();
-            if (health != null)
-            {
-                health.TakeDamage(damage);
-                hitSomething = true;
-                Debug.Log($"{weaponType} hit {hit.name} for {damage} damage");
-
-                // Knockback and temporary NavMeshAgent disable
-                Rigidbody rb = hit.attachedRigidbody;
-                NavMeshAgent agent = hit.GetComponent<NavMeshAgent>();
-
-                if (agent != null)
-                {
-                    agent.enabled = false;
-                }
-
-                if (rb != null)
-                {
-                    Vector3 knockbackDir = (hit.transform.position - attackOrigin.position).normalized;
-                    knockbackDir.y = 0.5f;
-                    knockbackDir.x = 1f;
-                    rb.AddForce(knockbackDir * knockbackForce, ForceMode.Impulse);
-
-                    // Re-enable NavMeshAgent after delay
-                    StartCoroutine(ReenableAgent(agent, 1f));
-                }
-            }
-        }
-
-        // TODO: Add knockback effect
-
-        if (hitSomething)
-        {
-            ApplyDurabilityLoss(1f);
-        } */
+        
         StartCoroutine(doAttackHitbox());
     }
 
@@ -198,11 +133,10 @@ public class MeleeWeapon : MonoBehaviour
         bool hitSomething = false;
 
         // Detect targets in range using a sphere overlap
-        Collider[] hits = Physics.OverlapSphere(attackOrigin.position, attackRange);
+        /* Collider[] hits = Physics.OverlapSphere(attackOrigin.position, attackRange);
         foreach (Collider hit in hits)
         {
             if (hit.transform.root == transform.root) continue;
-            Debug.Log($"Detected: {hit.name}, has Health: {hit.GetComponentInParent<Health>() != null}");
 
             // Apply damage to any object with a Health component
             Health health = FindHealth(hit);
@@ -237,9 +171,25 @@ public class MeleeWeapon : MonoBehaviour
                     // hitParticleSystem.Play();
                 }
             }
+        } */
+
+        Collider[] hits = Physics.OverlapSphere(attackOrigin.position, attackRange);
+        foreach (Collider hit in hits)
+        {
+            Debug.Log($"{hit.name} is inside the stupid fucking collision sphere");
+
+            if (hit.transform.root == transform.root) continue;
+
+            if (hit.gameObject.tag == "Emeny" || hit.gameObject.tag == "Player")
+            {
+                Health health = hit.GetComponent<Health>();
+                health.TakeDamage(damage);
+                Debug.Log($"{weaponType} hit {hit.name} for {damage} damage");
+            }
+
         }
 
-        damaged.Clear();
+        // damaged.Clear();
 
         // TODO: Add knockback effect
 
