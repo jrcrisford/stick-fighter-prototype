@@ -150,8 +150,9 @@ public class EnemyAI : MonoBehaviour
         foreach (Rigidbody rb in bodies)
         {
             rb.detectCollisions = false;
-            rb.useGravity = false;
+            // rb.useGravity = false;
             rb.isKinematic = true;
+            rb.WakeUp();
         }
 
         foreach (Collider col in GetComponentsInChildren<Collider>())
@@ -179,6 +180,10 @@ public class EnemyAI : MonoBehaviour
         _alignToSpine();
         DisableRagdoll();
         animator.Play(GetUpAnimationName);
+
+        enemyHitbox.enabled = false;
+        yield return null; // wait one frame
+        enemyHitbox.enabled = true;
     }
 
     private void RotateToward(Vector3 targetPos)

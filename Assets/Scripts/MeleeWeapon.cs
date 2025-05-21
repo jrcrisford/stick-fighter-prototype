@@ -176,8 +176,6 @@ public class MeleeWeapon : MonoBehaviour
         Collider[] hits = Physics.OverlapSphere(attackOrigin.position, attackRange);
         foreach (Collider hit in hits)
         {
-            Debug.Log($"{hit.name} is inside the stupid fucking collision sphere");
-
             if (hit.transform.root == transform.root) continue;
 
             if (hit.gameObject.tag == "Emeny" || hit.gameObject.tag == "Player")
@@ -188,8 +186,6 @@ public class MeleeWeapon : MonoBehaviour
             }
 
         }
-
-        // damaged.Clear();
 
         // TODO: Add knockback effect
 
