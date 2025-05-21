@@ -173,15 +173,19 @@ public class MeleeWeapon : MonoBehaviour
             }
         } */
 
-        Collider[] hits = Physics.OverlapSphere(attackOrigin.position, attackRange);
+        int HurtMask = LayerMask.GetMask("HurtBox");
+        Collider[] hits = Physics.OverlapSphere(attackOrigin.position, attackRange, HurtMask);
         foreach (Collider hit in hits)
         {
             if (hit.transform.root == transform.root) continue;
 
             if (hit.gameObject.tag == "Emeny" || hit.gameObject.tag == "Player")
             {
-                Health health = hit.GetComponent<Health>();
-                health.TakeDamage(damage);
+                Health health = hit.GetComponentInParent<Health>();
+                if (health != null)
+                {
+                    health.TakeDamage(damage);
+                }
                 Debug.Log($"{weaponType} hit {hit.name} for {damage} damage");
             }
 

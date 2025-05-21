@@ -25,11 +25,12 @@ public class EnemyAI : MonoBehaviour
     [Header("Getup animation")]
     [SerializeField] private string GetUpAnimationName;
     [SerializeField] private Transform spineBone;
+    [Header("Hurtbox")]
+    [SerializeField] private Collider Hurtbox;
 
     private NavMeshAgent agent;
     private Animator animator;
     private WeaponHandler weapons;
-    private Collider enemyHitbox;
     private Rigidbody[] bodies;
 
     private void Awake()
@@ -39,7 +40,6 @@ public class EnemyAI : MonoBehaviour
         animator = GetComponent<Animator>();
         weapons = GetComponent<WeaponHandler>();
         bodies = GetComponentsInChildren<Rigidbody>();
-        enemyHitbox = GetComponent<CapsuleCollider>();
         
         if (spineBone == null) Debug.LogWarning($"Could not find hip bone transform for {gameObject.name}");
 
@@ -117,6 +117,29 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    private IEnumerator ForceColliderReactivation(Collider hurtbox)
+    {
+        // Temporarily disable and re-enable the collider to force re-registration
+        hurtbox.enabled = false;
+        yield return null;  // Wait one frame
+        hurtbox.enabled = true;
+
+        Transform t = hurtbox.transform;
+        t.position += Vector3.up * 0.001f;
+        yield return null;
+        t.position -= Vector3.up * 0.001f;
+
+        Rigidbody rb = t.GetComponentInParent<Rigidbody>();
+        if (rb != null)
+            rb.WakeUp();
+    }
+
+    private IEnumerator ReactivateHurtBox()
+    {
+        Hurtbox.gameObject.SetActive(false);
+        yield return null; // wait 1 frame
+        Hurtbox.gameObject.SetActive(true);
+    }
     private void _alignToSpine()
     {
         Vector3 originalSpinePos = spineBone.position;
@@ -133,7 +156,6 @@ public class EnemyAI : MonoBehaviour
 
     public void EnableRagdoll()
     {
-        enemyHitbox.enabled = false;
         animator.enabled = false;
         agent.enabled = false;
 
@@ -157,13 +179,15 @@ public class EnemyAI : MonoBehaviour
 
         foreach (Collider col in GetComponentsInChildren<Collider>())
         {
+            if (col.gameObject.name == "HurtBox") continue;
             col.enabled = true;
             col.isTrigger = false;
         }
 
-        enemyHitbox.enabled = true;
         animator.enabled = true;
         agent.enabled = true;
+        StartCoroutine(ForceColliderReactivation(Hurtbox));
+        StartCoroutine(ReactivateHurtBox());
     }
 
     public void TempRagdoll(float sec)
@@ -180,10 +204,6 @@ public class EnemyAI : MonoBehaviour
         _alignToSpine();
         DisableRagdoll();
         animator.Play(GetUpAnimationName);
-
-        enemyHitbox.enabled = false;
-        yield return null; // wait one frame
-        enemyHitbox.enabled = true;
     }
 
     private void RotateToward(Vector3 targetPos)
