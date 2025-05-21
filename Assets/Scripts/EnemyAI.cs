@@ -6,6 +6,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(WeaponHandler))]
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(CapsuleCollider))]
 
 public class EnemyAI : MonoBehaviour
 {
@@ -24,11 +25,12 @@ public class EnemyAI : MonoBehaviour
     [Header("Getup animation")]
     [SerializeField] private string GetUpAnimationName;
     [SerializeField] private Transform spineBone;
+    [Header("Hurtbox")]
+    [SerializeField] private Collider Hurtbox;
 
     private NavMeshAgent agent;
     private Animator animator;
     private WeaponHandler weapons;
-
     private Rigidbody[] bodies;
 
     private void Awake()
@@ -115,6 +117,29 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    private IEnumerator ForceColliderReactivation(Collider hurtbox)
+    {
+        // Temporarily disable and re-enable the collider to force re-registration
+        hurtbox.enabled = false;
+        yield return null;  // Wait one frame
+        hurtbox.enabled = true;
+
+        Transform t = hurtbox.transform;
+        t.position += Vector3.up * 0.001f;
+        yield return null;
+        t.position -= Vector3.up * 0.001f;
+
+        Rigidbody rb = t.GetComponentInParent<Rigidbody>();
+        if (rb != null)
+            rb.WakeUp();
+    }
+
+    private IEnumerator ReactivateHurtBox()
+    {
+        Hurtbox.gameObject.SetActive(false);
+        yield return null; // wait 1 frame
+        Hurtbox.gameObject.SetActive(true);
+    }
     private void _alignToSpine()
     {
         Vector3 originalSpinePos = spineBone.position;
@@ -147,18 +172,22 @@ public class EnemyAI : MonoBehaviour
         foreach (Rigidbody rb in bodies)
         {
             rb.detectCollisions = false;
-            rb.useGravity = false;
+            // rb.useGravity = false;
             rb.isKinematic = true;
+            rb.WakeUp();
         }
 
         foreach (Collider col in GetComponentsInChildren<Collider>())
         {
+            if (col.gameObject.name == "HurtBox") continue;
             col.enabled = true;
             col.isTrigger = false;
         }
 
         animator.enabled = true;
         agent.enabled = true;
+        StartCoroutine(ForceColliderReactivation(Hurtbox));
+        StartCoroutine(ReactivateHurtBox());
     }
 
     public void TempRagdoll(float sec)
