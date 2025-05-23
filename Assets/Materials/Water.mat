@@ -120,8 +120,8 @@ Material:
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Ripple: 1
-    - _RippleDens: 10
-    - _RipplePow: 3
+    - _RippleDens: 125
+    - _RipplePow: 7.38
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -135,7 +135,7 @@ Material:
     - _ZWriteControl: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _BaseColour: {r: 0.33018857, g: 0.7419036, b: 1, a: 0}
+    - _BaseColour: {r: 0.32941175, g: 0.58458936, b: 1, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _RippleColour: {r: 0.3655833, g: 1.880402, b: 1.939623, a: 0}
