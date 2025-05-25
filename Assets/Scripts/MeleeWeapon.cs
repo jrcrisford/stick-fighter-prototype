@@ -162,29 +162,38 @@ public class MeleeWeapon : MonoBehaviour
                     Debug.Log($"{weaponType} hit {hit.gameObject.transform.parent.name} for {damage} damage");
                     health.TakeDamage(damage);
 
-
-                    Rigidbody rb = hit.gameObject.transform.parent.GetComponent<Collider>().attachedRigidbody; // lol
-                    StartCoroutine(disableKinematicTemp(rb, 2f));
-                    if (hit.gameObject.tag == "Emeny")
+                    if (hit.gameObject.tag == "Player")
                     {
-                        NavMeshAgent agent = hit.transform.parent.GetComponent<NavMeshAgent>();
-                        StartCoroutine(disableAgentTemp(agent, 2f));
+                        Rigidbody rb = hit.gameObject.transform.parent.GetComponent<Collider>().attachedRigidbody; // lol
+
+                        rb.AddExplosionForce(knockbackForce, attackOrigin.position, 5f, 1f, ForceMode.Impulse);
                     }
-                    rb.AddExplosionForce(knockbackForce * 100, attackOrigin.position, attackRange, 200f);
+                    else if (hit.gameObject.tag == "Emeny")
+                    {
+                        EnemyAI enemy = hit.transform.parent.GetComponent<EnemyAI>();
+                        Rigidbody[] bodies = hit.transform.parent.GetComponentsInChildren<Rigidbody>();
+                        /* enemy.setDeathState(true);
+                        enemy.ToggleRagdoll(true); */
+                        enemy.TempRagdoll(5f);
+                        foreach (Rigidbody rb in bodies)
+                        {
+                            rb.AddExplosionForce(107f, attackOrigin.position, 5f, 2.5f, ForceMode.Impulse);
+                        }
+                    }
 
                     /* Collider[] colliders = Physics.OverlapSphere(attackOrigin.position, attackRange);
-                    foreach (Collider c in colliders)
-                    {
-                        if (c.transform.root == transform.root) continue;
+                            foreach (Collider c in colliders)
+                            {
+                                if (c.transform.root == transform.root) continue;
 
-                        if (c.TryGetComponent<Rigidbody>(out var rb))
-                        {
-                            Debug.Log($"{c.name} took knockback");
-                            rb.isKinematic = false;
-                            rb.AddExplosionForce(knockbackForce * 100, attackOrigin.position, attackRange, 200f);
-                        }
-                        else Debug.Log($"{c.name} has no attached Rigidbody");
-                    } */
+                                if (c.TryGetComponent<Rigidbody>(out var rb))
+                                {
+                                    Debug.Log($"{c.name} took knockback");
+                                    rb.isKinematic = false;
+                                    rb.AddExplosionForce(knockbackForce * 100, attackOrigin.position, attackRange, 200f);
+                                }
+                                else Debug.Log($"{c.name} has no attached Rigidbody");
+                            } */
                 }
             }
 
