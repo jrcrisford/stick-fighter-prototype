@@ -2,6 +2,7 @@
 using UnityEngine.AI;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class MeleeWeapon : MonoBehaviour
 {
@@ -126,52 +127,26 @@ public class MeleeWeapon : MonoBehaviour
         StartCoroutine(doAttackHitbox());
     }
 
+    private IEnumerator disableKinematicTemp(Rigidbody rb, float time)
+    {
+        bool kinematicState = rb.isKinematic;
+        rb.isKinematic = false;
+        yield return new WaitForSeconds(time);
+        rb.isKinematic = kinematicState;
+    }
+
+    private IEnumerator disableAgentTemp(NavMeshAgent agent, float time)
+    {
+        agent.enabled = false;
+        yield return new WaitForSeconds(time);
+        agent.enabled = true;
+    }
+
     private IEnumerator doAttackHitbox()
     {
         // Delay the hitbox spawning until halfway through the swing
         yield return new WaitForSeconds(swingSpeed / 2f);
         bool hitSomething = false;
-
-        // Detect targets in range using a sphere overlap
-        /* Collider[] hits = Physics.OverlapSphere(attackOrigin.position, attackRange);
-        foreach (Collider hit in hits)
-        {
-            if (hit.transform.root == transform.root) continue;
-
-            // Apply damage to any object with a Health component
-            Health health = FindHealth(hit);
-            
-            if (health != null && !damaged.Contains(health.gameObject))
-            {
-                damaged.Add(health.gameObject);
-                health.TakeDamage(damage);
-                hitSomething = true;
-                Debug.Log($"{weaponType} hit {hit.name} for {damage} damage");
-
-                // Knockback and temporary NavMeshAgent disable
-                Rigidbody rb = hit.attachedRigidbody;
-                NavMeshAgent agent = hit.GetComponent<NavMeshAgent>();
-
-                if (agent != null)
-                {
-                    agent.enabled = false;
-                }
-
-                if (rb != null)
-                {
-                    Vector3 knockbackDir = (hit.transform.position - attackOrigin.position).normalized;
-                    knockbackDir.y = 0.5f;
-                    knockbackDir.x = 1f;
-                    rb.AddForce(knockbackDir * knockbackForce, ForceMode.Impulse);
-
-                    // Re-enable NavMeshAgent after delay
-                    StartCoroutine(ReenableAgent(agent, 1f));
-                    
-                    // Do attack hit particles
-                    // hitParticleSystem.Play();
-                }
-            }
-        } */
 
         int HurtMask = LayerMask.GetMask("HurtBox");
         Collider[] hits = Physics.OverlapSphere(attackOrigin.position, attackRange, HurtMask);
@@ -184,9 +159,33 @@ public class MeleeWeapon : MonoBehaviour
                 Health health = hit.GetComponentInParent<Health>();
                 if (health != null)
                 {
+                    Debug.Log($"{weaponType} hit {hit.gameObject.transform.parent.name} for {damage} damage");
                     health.TakeDamage(damage);
+
+
+                    Rigidbody rb = hit.gameObject.transform.parent.GetComponent<Collider>().attachedRigidbody; // lol
+                    StartCoroutine(disableKinematicTemp(rb, 2f));
+                    if (hit.gameObject.tag == "Emeny")
+                    {
+                        NavMeshAgent agent = hit.transform.parent.GetComponent<NavMeshAgent>();
+                        StartCoroutine(disableAgentTemp(agent, 2f));
+                    }
+                    rb.AddExplosionForce(knockbackForce * 100, attackOrigin.position, attackRange, 200f);
+
+                    /* Collider[] colliders = Physics.OverlapSphere(attackOrigin.position, attackRange);
+                    foreach (Collider c in colliders)
+                    {
+                        if (c.transform.root == transform.root) continue;
+
+                        if (c.TryGetComponent<Rigidbody>(out var rb))
+                        {
+                            Debug.Log($"{c.name} took knockback");
+                            rb.isKinematic = false;
+                            rb.AddExplosionForce(knockbackForce * 100, attackOrigin.position, attackRange, 200f);
+                        }
+                        else Debug.Log($"{c.name} has no attached Rigidbody");
+                    } */
                 }
-                Debug.Log($"{weaponType} hit {hit.name} for {damage} damage");
             }
 
         }

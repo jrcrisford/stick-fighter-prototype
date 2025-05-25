@@ -1,5 +1,6 @@
 using System.Collections;
 using Unity.VisualScripting;
+using UnityEditor.U2D;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -32,6 +33,9 @@ public class EnemyAI : MonoBehaviour
     private Animator animator;
     private WeaponHandler weapons;
     private Rigidbody[] bodies;
+    private Collider pCollider;
+    private bool dead = false;
+    private bool canAttack = true;
 
     private void Awake()
     {
@@ -40,7 +44,8 @@ public class EnemyAI : MonoBehaviour
         animator = GetComponent<Animator>();
         weapons = GetComponent<WeaponHandler>();
         bodies = GetComponentsInChildren<Rigidbody>();
-        
+        pCollider = GetComponent<CapsuleCollider>();
+
         if (spineBone == null) Debug.LogWarning($"Could not find hip bone transform for {gameObject.name}");
 
         GameObject player = GameObject.Find("PlayerMeatMan");
@@ -76,45 +81,66 @@ public class EnemyAI : MonoBehaviour
             return;
         }
 
-        animator.SetFloat("Speed", agent.velocity.magnitude);
-
-        float distanceToTarget = Vector3.Distance(transform.position, target.position);
-        if (distanceToTarget <= detectionRadius)
+        if (dead)
         {
-            if (distanceToTarget > stoppingDistance)
-            {
-                agent.SetDestination(target.position);
-            }
-            else
-            {
-                // Stop moving and rotate to face the player
-                agent.ResetPath();
-                RotateToward(target.position);
-
-                // Check if we are facing the player & attack
-                if (Vector3.Angle(target.forward, transform.position - target.position) < attackRadius)
-                {
-                    // TODO: make this attack with the appropriate weapon(s)
-                    if (leftWeapon != null)
-                    {
-                        weapons.AttemptAttack(0);
-                    }
-                }
-            }
+            agent.enabled = false;
         }
         else
         {
-            agent.ResetPath();
-        }
+            animator.SetFloat("Speed", agent.velocity.magnitude);
 
-        if (agent.hasPath)
-        {
-            Vector3[] corners = agent.path.corners;
-            for (int i = 0; i < corners.Length - 1; i++)
+            float distanceToTarget = Vector3.Distance(transform.position, target.position);
+            if (distanceToTarget <= detectionRadius)
             {
-                Debug.DrawLine(corners[i], corners[i + 1], Color.magenta);
+                if (distanceToTarget > stoppingDistance)
+                {
+                    agent.SetDestination(target.position);
+                }
+                else
+                {
+                    // Stop moving and rotate to face the player
+                    agent.ResetPath();
+                    RotateToward(target.position);
+
+                    // Check if we are facing the player & attack
+                    if (Vector3.Angle(target.forward, transform.position - target.position) < attackRadius)
+                    {
+                        // TODO: make this attack with the appropriate weapon(s)
+                        if (leftWeapon != null && canAttack)
+                        {
+                            StartCoroutine(attackCooldown(2f));
+                            weapons.AttemptAttack(0);
+                        }
+                    }
+                }
+
+            }
+            else
+            {
+                agent.ResetPath();
+            }
+
+            if (agent.hasPath)
+            {
+                Vector3[] corners = agent.path.corners;
+                for (int i = 0; i < corners.Length - 1; i++)
+                {
+                    Debug.DrawLine(corners[i], corners[i + 1], Color.magenta);
+                }
             }
         }
+    }
+
+    private IEnumerator attackCooldown(float cooldown)
+    {
+        canAttack = false;
+        yield return new WaitForSeconds(cooldown);
+        canAttack = true;
+    }
+
+    public void setDeathState(bool state)
+    {
+        dead = state;
     }
 
     private IEnumerator ForceColliderReactivation(Collider hurtbox)
@@ -156,6 +182,8 @@ public class EnemyAI : MonoBehaviour
 
     public void EnableRagdoll()
     {
+        pCollider.enabled = false;
+        Hurtbox.gameObject.SetActive(false);
         animator.enabled = false;
         agent.enabled = false;
 
@@ -186,6 +214,7 @@ public class EnemyAI : MonoBehaviour
 
         animator.enabled = true;
         agent.enabled = true;
+        Hurtbox.gameObject.SetActive(true);
         StartCoroutine(ForceColliderReactivation(Hurtbox));
         StartCoroutine(ReactivateHurtBox());
     }
