@@ -27,6 +27,7 @@ public class MeleeWeapon : MonoBehaviour
     [SerializeField] private float attackCooldown;                              // Minimum time between attacks
     [SerializeField] private float knockbackForce;                              // Force applied to hit targets   
     [SerializeField] private float swingSpeed;                                  // (Unsed for now) speed of the weapon swing for syncing animations
+    [SerializeField] private float stunTime;                                    // How long the weapon will stun enemies
 
     [Header("Durability")]
     [SerializeField] private float maxDurability;                               // Maximum durability of the weapon
@@ -66,6 +67,7 @@ public class MeleeWeapon : MonoBehaviour
                 knockbackForce = 5f;
                 swingSpeed = 1f;
                 maxDurability = 100f;
+                stunTime = 2f;
                 break;
             case WeaponType.Stick2:
                 damage = 15f;
@@ -74,6 +76,7 @@ public class MeleeWeapon : MonoBehaviour
                 knockbackForce = 6f;
                 swingSpeed = 1.2f;
                 maxDurability = 80f;
+                stunTime = 2f;
                 break;
             case WeaponType.Stick3:
                 damage = 20f;
@@ -82,6 +85,7 @@ public class MeleeWeapon : MonoBehaviour
                 knockbackForce = 7f;
                 swingSpeed = 1.5f;
                 maxDurability = 60f;
+                stunTime = 2.5f;
                 break;
             case WeaponType.Stick4:
                 damage = 25f;
@@ -90,6 +94,7 @@ public class MeleeWeapon : MonoBehaviour
                 knockbackForce = 8f;
                 swingSpeed = 1.8f;
                 maxDurability = 50f;
+                stunTime = 3f;
                 break;
             case WeaponType.Stick5:
                 damage = 30f;
@@ -98,6 +103,7 @@ public class MeleeWeapon : MonoBehaviour
                 knockbackForce = 9f;
                 swingSpeed = 2f;
                 maxDurability = 40f;
+                stunTime = 4f;
                 break;
         }
     }
@@ -164,9 +170,11 @@ public class MeleeWeapon : MonoBehaviour
 
                     if (hit.gameObject.tag == "Player")
                     {
+                        PlayerAiming aim = hit.transform.parent.GetComponent<PlayerAiming>();
                         Rigidbody rb = hit.gameObject.transform.parent.GetComponent<Collider>().attachedRigidbody; // lol
 
-                        rb.AddExplosionForce(knockbackForce, attackOrigin.position, 5f, 1f, ForceMode.Impulse);
+                        aim.stopRotateSec(1f);
+                        rb.AddExplosionForce(knockbackForce, attackOrigin.position, 5f, 10f, ForceMode.Impulse);
                     }
                     else if (hit.gameObject.tag == "Emeny")
                     {
@@ -174,10 +182,10 @@ public class MeleeWeapon : MonoBehaviour
                         Rigidbody[] bodies = hit.transform.parent.GetComponentsInChildren<Rigidbody>();
                         /* enemy.setDeathState(true);
                         enemy.ToggleRagdoll(true); */
-                        enemy.TempRagdoll(5f);
+                        enemy.TempRagdoll(stunTime);
                         foreach (Rigidbody rb in bodies)
                         {
-                            rb.AddExplosionForce(107f, attackOrigin.position, 5f, 2.5f, ForceMode.Impulse);
+                            rb.AddExplosionForce(knockbackForce * 20, attackOrigin.position, 5f, 2.5f, ForceMode.Impulse);
                         }
                     }
 
