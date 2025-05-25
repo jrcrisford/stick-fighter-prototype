@@ -37,9 +37,6 @@ public class MeleeWeapon : MonoBehaviour
     [Tooltip("Where the attack sphere will be cast from")]
     [SerializeField] private Transform attackOrigin;
 
-    [Header("Hit Particle")]
-    [SerializeField] private ParticleSystem hitParticleSystem;
-
     private float lastAttackTime;                                               // Time when the last attack happened
 
     private void Awake()
