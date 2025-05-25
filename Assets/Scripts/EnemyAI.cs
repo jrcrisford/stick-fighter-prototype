@@ -133,6 +133,14 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider col)
+    {
+        if (col.CompareTag("Death Plane"))
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private IEnumerator attackCooldown(float cooldown)
     {
         canAttack = false;
@@ -180,7 +188,7 @@ public class EnemyAI : MonoBehaviour
     }
 
     // LEGACY FUNCTION - DO NOT USE
-    public void EnableRagdoll()
+/*    public void EnableRagdoll()
     {
         pCollider.enabled = false;
         Hurtbox.gameObject.SetActive(false);
@@ -193,7 +201,7 @@ public class EnemyAI : MonoBehaviour
             rb.useGravity = true;
             rb.isKinematic = false;
         }
-    }
+    }*/
 
     public void TempRagdoll(float sec)
     {
