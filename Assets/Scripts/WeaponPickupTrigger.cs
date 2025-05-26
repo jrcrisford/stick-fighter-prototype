@@ -1,7 +1,6 @@
 using UnityEngine;
 
 [RequireComponent(typeof(MeleeWeapon))]
-[RequireComponent(typeof(Light))]
 public class WeaponPickupTrigger : MonoBehaviour
 {
     private bool isPickedUp = false;

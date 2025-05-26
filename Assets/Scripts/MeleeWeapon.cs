@@ -130,25 +130,10 @@ public class MeleeWeapon : MonoBehaviour
         StartCoroutine(doAttackHitbox());
     }
 
-    private IEnumerator disableKinematicTemp(Rigidbody rb, float time)
-    {
-        bool kinematicState = rb.isKinematic;
-        rb.isKinematic = false;
-        yield return new WaitForSeconds(time);
-        rb.isKinematic = kinematicState;
-    }
-
-    private IEnumerator disableAgentTemp(NavMeshAgent agent, float time)
-    {
-        agent.enabled = false;
-        yield return new WaitForSeconds(time);
-        agent.enabled = true;
-    }
-
     private IEnumerator doAttackHitbox()
     {
-        // Delay the hitbox spawning until halfway through the swing
-        yield return new WaitForSeconds(swingSpeed / 2f);
+        // Delay the hitbox
+        yield return new WaitForSeconds(0.5f);
         bool hitSomething = false;
 
         int HurtMask = LayerMask.GetMask("HurtBox");
@@ -177,28 +162,12 @@ public class MeleeWeapon : MonoBehaviour
                     {
                         EnemyAI enemy = hit.transform.parent.GetComponent<EnemyAI>();
                         Rigidbody[] bodies = hit.transform.parent.GetComponentsInChildren<Rigidbody>();
-                        /* enemy.setDeathState(true);
-                        enemy.ToggleRagdoll(true); */
                         enemy.TempRagdoll(stunTime);
                         foreach (Rigidbody rb in bodies)
                         {
                             rb.AddExplosionForce(knockbackForce * 20, attackOrigin.position, 5f, 2.5f, ForceMode.Impulse);
                         }
                     }
-
-                    /* Collider[] colliders = Physics.OverlapSphere(attackOrigin.position, attackRange);
-                            foreach (Collider c in colliders)
-                            {
-                                if (c.transform.root == transform.root) continue;
-
-                                if (c.TryGetComponent<Rigidbody>(out var rb))
-                                {
-                                    Debug.Log($"{c.name} took knockback");
-                                    rb.isKinematic = false;
-                                    rb.AddExplosionForce(knockbackForce * 100, attackOrigin.position, attackRange, 200f);
-                                }
-                                else Debug.Log($"{c.name} has no attached Rigidbody");
-                            } */
                 }
             }
 
@@ -243,15 +212,5 @@ public class MeleeWeapon : MonoBehaviour
 
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(attackOrigin.position, attackRange);
-    }
-    private IEnumerator ReenableAgent(NavMeshAgent agent, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-
-        if (agent != null)
-        {
-            agent.enabled = true;
-            agent.velocity = Vector3.zero;
-        }
     }
 }

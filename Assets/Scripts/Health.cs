@@ -55,7 +55,7 @@ public class Health : MonoBehaviour
 
         if (animator != null)
         {
-            //animator.SetTrigger("Hit");
+            animator.SetTrigger("Hit");
             onHit?.Invoke();
         }
     }
@@ -88,7 +88,7 @@ public class Health : MonoBehaviour
             }
             else if(gameObject.CompareTag("Emeny"))
             {
-                Destroy(gameObject, 4f);
+                Destroy(gameObject, 2f);
             }
         }
         else

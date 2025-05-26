@@ -35,7 +35,7 @@ public class EnemyAI : MonoBehaviour
     private Rigidbody[] bodies;
     private Collider[] colliders;
     private Collider pCollider;
-    private bool dead = false;
+    private bool isRagdolling = false;
     private bool canAttack = true;
 
     private void Awake()
@@ -83,7 +83,7 @@ public class EnemyAI : MonoBehaviour
             return;
         }
 
-        if (dead)
+        if (isRagdolling)
         {
             agent.enabled = false;
         }
@@ -150,7 +150,7 @@ public class EnemyAI : MonoBehaviour
 
     public void setDeathState(bool state)
     {
-        dead = state;
+        isRagdolling = state;
     }
 
     private void _alignToSpine()
@@ -210,7 +210,7 @@ public class EnemyAI : MonoBehaviour
 
     private IEnumerator _tempRagdoll(float sec)
     {
-        dead = true;
+        isRagdolling = true;
         ToggleRagdoll(true);
 
         yield return new WaitForSeconds(sec);
@@ -218,7 +218,7 @@ public class EnemyAI : MonoBehaviour
         //_alignToSpine();
         ToggleRagdoll(false);
         animator.Play(GetUpAnimationName);
-        dead = false;
+        isRagdolling = false;
     }
 
     private void RotateToward(Vector3 targetPos)
