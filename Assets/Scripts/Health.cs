@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -41,6 +42,11 @@ public class Health : MonoBehaviour
         }
     }
 
+    public bool IsDead()
+    {
+        return currentHealth <= 0f;
+    }
+
     public void TakeDamage(float damageAmount)
     {
         currentHealth = Mathf.Max(currentHealth - damageAmount, 0f);
@@ -81,6 +87,8 @@ public class Health : MonoBehaviour
         {
             if(gameObject.CompareTag("Player"))
             {
+                PlayerAiming aim = GetComponent<PlayerAiming>();
+                aim.enabled = false;
                 animator.SetBool("isDead", true);
                 animator.SetTrigger("Die");
                 //GameManager.Instance?.TriggerGameOver();

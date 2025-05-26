@@ -83,10 +83,10 @@ MonoBehaviour:
   attackCooldown: 0
   knockbackForce: 0
   swingSpeed: 0
+  stunTime: 0
   maxDurability: 0
   currentDurability: 0
   attackOrigin: {fileID: 7523913394387999714}
-  hitParticleSystem: {fileID: 0}
 --- !u!1 &4242262438703861643
 GameObject:
   m_ObjectHideFlags: 0
@@ -569,6 +569,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 10
+  rotate: 1
 --- !u!114 &5927239340063861621
 MonoBehaviour:
   m_ObjectHideFlags: 0

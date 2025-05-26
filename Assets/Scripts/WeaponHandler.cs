@@ -85,7 +85,6 @@ public class WeaponHandler : MonoBehaviour
 
     private void EquipWeapon(MeleeWeapon weapon, Transform hand, bool isLeft)
     {
-        Light light = weapon.GetComponent<Light>();
         Transform grip = weapon.transform.Find("GripPoint");
         if (grip != null)
         {
@@ -116,6 +115,5 @@ public class WeaponHandler : MonoBehaviour
 
         if (isLeft) leftWeapon = weapon;
         else rightWeapon = weapon;
-        light.enabled = false;
     }
 }

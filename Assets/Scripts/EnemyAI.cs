@@ -35,6 +35,7 @@ public class EnemyAI : MonoBehaviour
     private Rigidbody[] bodies;
     private Collider[] colliders;
     private Collider pCollider;
+    private Health playerHealth;
     private bool isRagdolling = false;
     private bool canAttack = true;
 
@@ -54,6 +55,7 @@ public class EnemyAI : MonoBehaviour
         if (player != null)
         {
             target = player.transform;
+            playerHealth = player.GetComponent<Health>();
         }
         else
         {
@@ -83,7 +85,7 @@ public class EnemyAI : MonoBehaviour
             return;
         }
 
-        if (isRagdolling)
+        if (isRagdolling || playerHealth.IsDead())
         {
             agent.enabled = false;
         }
@@ -151,20 +153,6 @@ public class EnemyAI : MonoBehaviour
     public void setDeathState(bool state)
     {
         isRagdolling = state;
-    }
-
-    private void _alignToSpine()
-    {
-        Vector3 originalSpinePos = spineBone.position;
-        transform.position = spineBone.position;
-
-        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit info))
-        {
-            transform.position = new Vector3(transform.position.x, info.point.y, transform.position.z);
-        }
-
-        spineBone.position = originalSpinePos;
-        animator.Rebind();
     }
 
     public void ToggleRagdoll(bool state)
