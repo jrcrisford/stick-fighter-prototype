@@ -37,6 +37,9 @@ public class MeleeWeapon : MonoBehaviour
     [Tooltip("Where the attack sphere will be cast from")]
     [SerializeField] private Transform attackOrigin;
 
+    [Header("Particles to use")]
+    [SerializeField] private ParticleSystem HitParticles;
+
     private float lastAttackTime;                                               // Time when the last attack happened
 
     private void Awake()
@@ -150,24 +153,29 @@ public class MeleeWeapon : MonoBehaviour
                     Debug.Log($"{weaponType} hit {hit.gameObject.transform.parent.name} for {damage} damage");
                     health.TakeDamage(damage);
 
-                    if (hit.gameObject.tag == "Player")
+                    if (HitParticles != null)
                     {
-                        PlayerAiming aim = hit.transform.parent.GetComponent<PlayerAiming>();
-                        Rigidbody rb = hit.gameObject.transform.parent.GetComponent<Collider>().attachedRigidbody; // lol
+                        PlayDamageFX();
+                    }
 
-                        aim.stopRotateSec(1f);
-                        rb.AddExplosionForce(knockbackForce, attackOrigin.position, 5f, 10f, ForceMode.Impulse);
-                    }
-                    else if (hit.gameObject.tag == "Emeny")
-                    {
-                        EnemyAI enemy = hit.transform.parent.GetComponent<EnemyAI>();
-                        Rigidbody[] bodies = hit.transform.parent.GetComponentsInChildren<Rigidbody>();
-                        enemy.TempRagdoll(stunTime);
-                        foreach (Rigidbody rb in bodies)
+                    if (hit.gameObject.tag == "Player")
                         {
-                            rb.AddExplosionForce(knockbackForce * 20, attackOrigin.position, 5f, 2.5f, ForceMode.Impulse);
+                            PlayerAiming aim = hit.transform.parent.GetComponent<PlayerAiming>();
+                            Rigidbody rb = hit.gameObject.transform.parent.GetComponent<Collider>().attachedRigidbody; // lol
+
+                            aim.stopRotateSec(1f);
+                            rb.AddExplosionForce(knockbackForce, attackOrigin.position, 5f, 10f, ForceMode.Impulse);
                         }
-                    }
+                        else if (hit.gameObject.tag == "Emeny")
+                        {
+                            EnemyAI enemy = hit.transform.parent.GetComponent<EnemyAI>();
+                            Rigidbody[] bodies = hit.transform.parent.GetComponentsInChildren<Rigidbody>();
+                            enemy.TempRagdoll(stunTime);
+                            foreach (Rigidbody rb in bodies)
+                            {
+                                rb.AddExplosionForce(knockbackForce * 20, attackOrigin.position, 5f, 2.5f, ForceMode.Impulse);
+                            }
+                        }
                 }
             }
 
@@ -179,6 +187,12 @@ public class MeleeWeapon : MonoBehaviour
         {
             ApplyDurabilityLoss(1f);
         }
+    }
+
+    private void PlayDamageFX()
+    {
+        HitParticles.transform.SetPositionAndRotation(attackOrigin.position, attackOrigin.rotation);
+        HitParticles.Play();
     }
 
     // Reduces durability each time the weapon is used

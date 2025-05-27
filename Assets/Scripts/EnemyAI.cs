@@ -89,6 +89,10 @@ public class EnemyAI : MonoBehaviour
         {
             agent.enabled = false;
         }
+        else if (!agent.isOnNavMesh)
+        {
+            TempRagdoll(2f);
+        }
         else
         {
             animator.SetFloat("Speed", agent.velocity.magnitude);
