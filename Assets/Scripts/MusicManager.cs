@@ -1,9 +1,15 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 [RequireComponent(typeof(AudioSource))]
 public class MusicManager : MonoBehaviour
 {
     public static MusicManager Instance { get; private set; }
+
+    [Header("Mixer Setup")]
+    [SerializeField] private AudioMixer audioMixer;
+    [SerializeField] private string musicVolumeParam = "MusicVolume"; 
+    [SerializeField] private string masterVolumeParam = "MasterVolume";
 
     private AudioSource musicSource;
 
@@ -23,10 +29,14 @@ public class MusicManager : MonoBehaviour
         musicSource.playOnAwake = true;
         musicSource.Play();
     }
-
-    public void SetVolume(float volume)
+    public void SetMasterVolume(float db)
     {
-        musicSource.volume = Mathf.Clamp01(volume);
+        audioMixer.SetFloat(masterVolumeParam, db);
+    }
+
+    public void SetMusicVolume(float db)
+    {
+        audioMixer.SetFloat(musicVolumeParam, db);
     }
 
     public void ChangeTrack(AudioClip newTrack)
