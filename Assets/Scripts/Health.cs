@@ -89,6 +89,8 @@ public class Health : MonoBehaviour
             {
                 PlayerAiming aim = GetComponent<PlayerAiming>();
                 aim.enabled = false;
+                PlayerMovement movement = GetComponent<PlayerMovement>();
+                movement.enabled = false;
                 animator.SetBool("isDead", true);
                 animator.SetTrigger("Die");
                 //GameManager.Instance?.TriggerGameOver();
