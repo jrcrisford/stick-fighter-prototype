@@ -2009,6 +2009,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d86bcd1e475d454c958360f3ca97a0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  masterVolumeSlider: {fileID: 0}
+  musicVolumeSlider: {fileID: 0}
 --- !u!1001 &462002705
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5179,6 +5181,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d86bcd1e475d454c958360f3ca97a0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  masterVolumeSlider: {fileID: 1372996437}
+  musicVolumeSlider: {fileID: 535424771}
 --- !u!1 &1255666166
 GameObject:
   m_ObjectHideFlags: 0
@@ -8107,7 +8111,7 @@ MonoBehaviour:
   audioMixer: {fileID: 24100000, guid: cc81412304396324a8bed0e8f71ec33e, type: 2}
   masterSlider: {fileID: 1372996437}
   musicSlider: {fileID: 535424771}
-  sfxSlider: {fileID: 0}
+  sfxSlider: {fileID: 1451304931}
 --- !u!1 &2067041972
 GameObject:
   m_ObjectHideFlags: 0

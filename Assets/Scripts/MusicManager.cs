@@ -27,6 +27,13 @@ public class MusicManager : MonoBehaviour
         musicSource = GetComponent<AudioSource>();
         musicSource.loop = true;
         musicSource.playOnAwake = true;
+
+        // Set default volume to 50%
+        float defaultVol = 0.5f;
+        float defaultDb = Mathf.Log10(defaultVol) * 20f;
+        audioMixer.SetFloat(musicVolumeParam, defaultDb);
+        audioMixer.SetFloat(masterVolumeParam, defaultDb);
+
         musicSource.Play();
     }
     public void SetMasterVolume(float db)
