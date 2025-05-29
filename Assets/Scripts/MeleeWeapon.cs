@@ -22,10 +22,10 @@ public class MeleeWeapon : MonoBehaviour
     [SerializeField] private bool usePresetStats = true;                        // If true weapon stats are set automatically
 
     [Header("Weapon Stats")]
-    [SerializeField] private float damage;                                      // How much damage the weapon does
-    [SerializeField] private float attackRange;                                 // How far the weapon can hit
+    [SerializeField] public float damage;                                      // How much damage the weapon does
+    [SerializeField] public float attackRange;                                 // How far the weapon can hit
     [SerializeField] private float attackCooldown;                              // Minimum time between attacks
-    [SerializeField] private float knockbackForce;                              // Force applied to hit targets   
+    [SerializeField] public float knockbackForce;                              // Force applied to hit targets   
     [SerializeField] private float swingSpeed;                                  // (Unsed for now) speed of the weapon swing for syncing animations
     [SerializeField] private float stunTime;                                    // How long the weapon will stun enemies
 

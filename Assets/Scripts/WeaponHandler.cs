@@ -1,4 +1,5 @@
 //using UnityEditor.Rendering;
+using TMPro;
 using UnityEngine;
 
 public class WeaponHandler : MonoBehaviour
@@ -11,6 +12,17 @@ public class WeaponHandler : MonoBehaviour
     [SerializeField] private Transform leftHand;
     [SerializeField] private Transform rightHand;
 
+    [Header("Item UI")]
+    [SerializeField] private TextMeshProUGUI leftDam;
+    [SerializeField] private TextMeshProUGUI rightDam;
+    [SerializeField] private TextMeshProUGUI leftRange;
+    [SerializeField] private TextMeshProUGUI rightRange;
+    [SerializeField] private TextMeshProUGUI leftKnock;
+    [SerializeField] private TextMeshProUGUI rightKnock;
+    [SerializeField] private TextMeshProUGUI leftStick;
+    [SerializeField] private TextMeshProUGUI rightStick;
+
+
     private Animator animator;
     private bool isPlayer = false;
     private bool equipToLeftNext = true;
@@ -18,6 +30,15 @@ public class WeaponHandler : MonoBehaviour
     void Awake()
     {
         animator = GetComponent<Animator>();
+
+        leftDam.text = string.Empty;
+        rightDam.text = string.Empty;
+        leftRange.text = string.Empty;
+        rightRange.text = string.Empty;
+        leftKnock.text = string.Empty;
+        rightKnock.text = string.Empty;
+        leftStick.text = string.Empty;
+        rightStick.text = string.Empty;
 
         if (gameObject.CompareTag("Player"))
         {
@@ -72,11 +93,19 @@ public class WeaponHandler : MonoBehaviour
         if (equipToLeftNext)
         {
             if (leftWeapon != null) Destroy(leftWeapon.gameObject);
+            leftStick.text = weapon.name;
+            leftDam.text = weapon.damage.ToString();
+            leftRange.text = weapon.attackRange.ToString();
+            leftKnock.text = weapon.knockbackForce.ToString();
             EquipWeapon(weapon, leftHand, true);
         }
         else
         {
             if (rightWeapon != null) Destroy(rightWeapon.gameObject);
+            rightStick.text = weapon.name;
+            rightDam.text = weapon.damage.ToString();
+            rightRange.text = weapon.attackRange.ToString();
+            rightKnock.text = weapon.knockbackForce.ToString();
             EquipWeapon(weapon, rightHand, false);
         }
 

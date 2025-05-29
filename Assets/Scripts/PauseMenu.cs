@@ -15,6 +15,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject gameOverUI;
     public GameObject gameWinUI;
     public GameObject inGameUI;
+    public GameObject itemUI;
     public TextMeshProUGUI score;
     public TextMeshProUGUI score2;
     public GameObject player;
@@ -39,6 +40,7 @@ public class PauseMenu : MonoBehaviour
         gameOverUI.SetActive(false);
         gameWinUI.SetActive(false);
         inGameUI.SetActive(true);
+        itemUI.SetActive(true);
         gamePaused = false;
         gameOver = false;
     }
@@ -70,6 +72,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1.0f;
         gamePaused = false;
         inGameUI.SetActive(true);
+        itemUI.SetActive(true);
     }
 
     public void GamePause()
@@ -77,6 +80,7 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         gamePaused = true;
+        itemUI.SetActive(false);
         inGameUI.SetActive(false);
     }
 
@@ -86,6 +90,7 @@ public class PauseMenu : MonoBehaviour
 
         gameOverUI.SetActive(true);
         inGameUI.SetActive(false);
+        itemUI.SetActive(false);
         Time.timeScale = 0f;
         score.text = total.ToString();
         gameOver = true;
@@ -100,6 +105,7 @@ public class PauseMenu : MonoBehaviour
             Debug.Log("It work");
             gameWinUI.SetActive(true);
             inGameUI.SetActive(false);
+            itemUI.SetActive(false);
             Time.timeScale = 0f;
             score2.text = total.ToString();
             gameOver = true;
