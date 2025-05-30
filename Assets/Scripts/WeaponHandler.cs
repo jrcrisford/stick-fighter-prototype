@@ -21,7 +21,7 @@ public class WeaponHandler : MonoBehaviour
     [SerializeField] private TextMeshProUGUI rightKnock;
     [SerializeField] private TextMeshProUGUI leftStick;
     [SerializeField] private TextMeshProUGUI rightStick;
-
+    private bool hasUI;
 
     private Animator animator;
     private bool isPlayer = false;
@@ -30,20 +30,24 @@ public class WeaponHandler : MonoBehaviour
     void Awake()
     {
         animator = GetComponent<Animator>();
+        hasUI = leftDam != null; //TODO; make a better check for this.
 
-        leftDam.text = string.Empty;
-        rightDam.text = string.Empty;
-        leftRange.text = string.Empty;
-        rightRange.text = string.Empty;
-        leftKnock.text = string.Empty;
-        rightKnock.text = string.Empty;
-        leftStick.text = string.Empty;
-        rightStick.text = string.Empty;
+        if (hasUI)
+        {
+            leftDam.text = string.Empty;
+            rightDam.text = string.Empty;
+            leftRange.text = string.Empty;
+            rightRange.text = string.Empty;
+            leftKnock.text = string.Empty;
+            rightKnock.text = string.Empty;
+            leftStick.text = string.Empty;
+            rightStick.text = string.Empty;
+        }
 
         if (gameObject.CompareTag("Player"))
-        {
-            isPlayer = true;
-        }
+            {
+                isPlayer = true;
+            }
 
         Transform[] allChildren = GetComponentsInChildren<Transform>(true);
         foreach (Transform t in allChildren)
@@ -93,19 +97,29 @@ public class WeaponHandler : MonoBehaviour
         if (equipToLeftNext)
         {
             if (leftWeapon != null) Destroy(leftWeapon.gameObject);
-            leftStick.text = weapon.name;
-            leftDam.text = weapon.damage.ToString();
-            leftRange.text = weapon.attackRange.ToString();
-            leftKnock.text = weapon.knockbackForce.ToString();
+
+            if (hasUI)
+            {
+                leftStick.text = weapon.name;
+                leftDam.text = weapon.damage.ToString();
+                leftRange.text = weapon.attackRange.ToString();
+                leftKnock.text = weapon.knockbackForce.ToString();
+            }
+
             EquipWeapon(weapon, leftHand, true);
         }
         else
         {
             if (rightWeapon != null) Destroy(rightWeapon.gameObject);
-            rightStick.text = weapon.name;
-            rightDam.text = weapon.damage.ToString();
-            rightRange.text = weapon.attackRange.ToString();
-            rightKnock.text = weapon.knockbackForce.ToString();
+
+            if (hasUI)
+            {
+                rightStick.text = weapon.name;
+                rightDam.text = weapon.damage.ToString();
+                rightRange.text = weapon.attackRange.ToString();
+                rightKnock.text = weapon.knockbackForce.ToString();
+            }
+            
             EquipWeapon(weapon, rightHand, false);
         }
 
