@@ -1,4 +1,5 @@
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -52,7 +53,10 @@ public class Health : MonoBehaviour
         {
             if (Time.time - lastDamageTime >= regenDelay)
             {
-                Heal(regenRate * Time.deltaTime);
+                if (gameObject.CompareTag("Player"))
+                {
+                    Heal(regenRate * Time.deltaTime);
+                } 
             }
 
             if (Input.GetKeyDown(KeyCode.BackQuote))
