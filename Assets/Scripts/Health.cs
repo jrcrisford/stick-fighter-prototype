@@ -9,13 +9,13 @@ public class Health : MonoBehaviour
     [SerializeField] private float currentHealth;
     [SerializeField] private bool debugKill = false;
     [SerializeField] private bool debugHit = false;
+    [SerializeField] private bool debugMode = false;
 
     [Header("Regen Settings")]
     [SerializeField] private bool allowRegen = true;
     [SerializeField] private float regenRate = 3.33f; // Health per second when regenerating
     [SerializeField] private float regenDelay = 3f; // Time before regen starts after taking damage
     private float lastDamageTime; 
-
 
     [Header("Events")]
     public UnityEvent onDeath;
@@ -54,6 +54,10 @@ public class Health : MonoBehaviour
             {
                 Heal(regenRate * Time.deltaTime);
             }
+            
+        if (Input.GetKeyDown(KeyCode.BackQuote))
+        {
+            debugMode = !debugMode;
         }
     }
 
@@ -64,6 +68,9 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(float damageAmount)
     {
+        if (gameObject.CompareTag("Player")) damageAmount *= 0.5f;
+        if (debugMode == true && gameObject.CompareTag("Player")) damageAmount = 0f;
+
         currentHealth = Mathf.Max(currentHealth - damageAmount, 0f);
         healthBar.setHealth(currentHealth);
         onDamage?.Invoke(damageAmount);
