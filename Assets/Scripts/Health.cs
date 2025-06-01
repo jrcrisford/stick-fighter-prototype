@@ -9,6 +9,7 @@ public class Health : MonoBehaviour
     [SerializeField] private float currentHealth;
     [SerializeField] private bool debugKill = false;
     [SerializeField] private bool debugHit = false;
+    [SerializeField] private bool debugMode = false;
 
     [Header("Events")]
     public UnityEvent onDeath;
@@ -40,6 +41,11 @@ public class Health : MonoBehaviour
             TakeDamage(10f);
             debugHit = false;
         }
+
+        if (Input.GetKeyDown(KeyCode.BackQuote))
+        {
+            debugMode = !debugMode;
+        }
     }
 
     public bool IsDead()
@@ -49,6 +55,9 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(float damageAmount)
     {
+        if (gameObject.CompareTag("Player")) damageAmount *= 0.5f;
+        if (debugMode == true && gameObject.CompareTag("Player")) damageAmount = 0f;
+
         currentHealth = Mathf.Max(currentHealth - damageAmount, 0f);
         healthBar.setHealth(currentHealth);
         onDamage?.Invoke(damageAmount);
