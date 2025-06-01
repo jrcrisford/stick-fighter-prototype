@@ -54,10 +54,11 @@ public class Health : MonoBehaviour
             {
                 Heal(regenRate * Time.deltaTime);
             }
-            
-        if (Input.GetKeyDown(KeyCode.BackQuote))
-        {
-            debugMode = !debugMode;
+
+            if (Input.GetKeyDown(KeyCode.BackQuote))
+            {
+                debugMode = !debugMode;
+            }
         }
     }
 
@@ -89,13 +90,13 @@ public class Health : MonoBehaviour
             onHit?.Invoke();
         }
     }
-
+    
     public void Heal(float healAmount)
     {
-        currentHealth = Mathf.Min(currentHealth + healAmount, maxHealth);
-        onHeal?.Invoke(healAmount);
-        Debug.Log($"{name} healed {healAmount} HP. Current HP: {currentHealth}/{maxHealth}");
-        healthBar.setHealth(currentHealth); // Updates health bar
+         currentHealth = Mathf.Min(currentHealth + healAmount, maxHealth);
+         onHeal?.Invoke(healAmount);
+         Debug.Log($"{name} healed {healAmount} HP. Current HP: {currentHealth}/{maxHealth}");
+         healthBar.setHealth(currentHealth); // Updates health bar
     }
 
     public void IncreaseMaxHealth(float healthAmount, bool restoreToFull = true)
@@ -110,7 +111,7 @@ public class Health : MonoBehaviour
         onDeath?.Invoke();
         if (animator != null)
         {
-            if(gameObject.CompareTag("Player"))
+            if (gameObject.CompareTag("Player"))
             {
                 PlayerAiming aim = GetComponent<PlayerAiming>();
                 aim.enabled = false;
@@ -121,7 +122,7 @@ public class Health : MonoBehaviour
                 //GameManager.Instance?.TriggerGameOver();
                 Destroy(gameObject, 4f);
             }
-            else if(gameObject.CompareTag("Emeny"))
+            else if (gameObject.CompareTag("Emeny"))
             {
                 Destroy(gameObject, 2f);
             }
@@ -131,5 +132,4 @@ public class Health : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
 }
