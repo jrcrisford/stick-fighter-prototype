@@ -1,7 +1,3 @@
-
-markdown
-Copy
-Edit
 # Stick Fighter – Game Prototype  
 **KIT207 – Game Design and Production**  
 **Team: The Lobotomy**
